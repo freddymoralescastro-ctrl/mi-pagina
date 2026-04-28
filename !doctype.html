@@ -1,0 +1,1391 @@
+<!doctype html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentación Interactiva - UdeC con botones Atrás</title>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+
+    /* Reemplazo local de utilidades Tailwind usadas en esta presentación.
+       Se elimina el CDN de Tailwind para que no aparezca la advertencia en consola. */
+    html.h-full, body.h-full { height: 100%; }
+    .h-full { height: 100%; }
+    .w-full { width: 100%; }
+    .flex { display: flex; }
+    .grid { display: grid; }
+    .hidden { display: none !important; }
+    .absolute { position: absolute; }
+    .relative { position: relative; }
+    .fixed { position: fixed; }
+    .sticky { position: sticky; }
+    .inset-0 { inset: 0; }
+    .top-0 { top: 0; }
+    .left-0 { left: 0; }
+    .z-10 { z-index: 10; }
+    .z-20 { z-index: 20; }
+    .z-30 { z-index: 30; }
+    .z-50 { z-index: 50; }
+    .flex-1 { flex: 1 1 0%; }
+    .shrink-0 { flex-shrink: 0; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .items-start { align-items: flex-start; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .overflow-hidden { overflow: hidden; }
+    .overflow-auto { overflow: auto; }
+    .overflow-y-auto { overflow-y: auto; }
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .gap-1 { gap: .25rem; }
+    .gap-2 { gap: .5rem; }
+    .gap-3 { gap: .75rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-5 { gap: 1.25rem; }
+    .gap-6 { gap: 1.5rem; }
+    .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+    .p-2 { padding: .5rem; }
+    .p-4 { padding: 1rem; }
+    .p-5 { padding: 1.25rem; }
+    .p-6 { padding: 1.5rem; }
+    .p-7 { padding: 1.75rem; }
+    .px-2 { padding-left: .5rem; padding-right: .5rem; }
+    .px-3 { padding-left: .75rem; padding-right: .75rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .px-7 { padding-left: 1.75rem; padding-right: 1.75rem; }
+    .py-1 { padding-top: .25rem; padding-bottom: .25rem; }
+    .py-3 { padding-top: .75rem; padding-bottom: .75rem; }
+    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .py-5 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+    .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .pt-8 { padding-top: 2rem; }
+    .mb-2 { margin-bottom: .5rem; }
+    .mb-3 { margin-bottom: .75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mt-1 { margin-top: .25rem; }
+    .mt-2 { margin-top: .5rem; }
+    .mt-3 { margin-top: .75rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mt-5 { margin-top: 1.25rem; }
+    .mt-6 { margin-top: 1.5rem; }
+    .h-1\.5 { height: .375rem; }
+    .h-2 { height: .5rem; }
+    .h-8 { height: 2rem; }
+    .h-11 { height: 2.75rem; }
+    .h-12 { height: 3rem; }
+    .w-8 { width: 2rem; }
+    .w-11 { width: 2.75rem; }
+    .w-12 { width: 3rem; }
+    .w-72 { width: 18rem; }
+    .max-w-xl { max-width: 36rem; }
+    .max-w-2xl { max-width: 42rem; }
+    .max-w-3xl { max-width: 48rem; }
+    .max-h-96 { max-height: 24rem; }
+    .rounded-xl { border-radius: .75rem; }
+    .rounded-2xl { border-radius: 1rem; }
+    .rounded-3xl { border-radius: 1.5rem; }
+    .rounded-full { border-radius: 9999px; }
+    .rounded-r { border-top-right-radius: .25rem; border-bottom-right-radius: .25rem; }
+    .border-b { border-bottom: 1px solid rgba(0,72,43,.14); }
+    .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0,0,0,.25); }
+    .bg-black\/40 { background-color: rgba(0,0,0,.40); }
+    .text-white { color: #fff; }
+    .text-white\/45 { color: rgba(255,255,255,.45); }
+    .text-white\/55 { color: rgba(255,255,255,.55); }
+    .text-white\/70 { color: rgba(255,255,255,.70); }
+    .text-white\/75 { color: rgba(255,255,255,.75); }
+    .text-white\/85 { color: rgba(255,255,255,.85); }
+    .hover\:text-white:hover { color: #fff; }
+    .text-xs { font-size: .75rem; line-height: 1rem; }
+    .text-sm { font-size: .875rem; line-height: 1.25rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .text-5xl { font-size: 3rem; line-height: 1; }
+    .text-6xl { font-size: 3.75rem; line-height: 1; }
+    .text-left { text-align: left; }
+    .text-center { text-align: center; }
+    .font-bold { font-weight: 700; }
+    .font-extrabold { font-weight: 800; }
+    .leading-tight { line-height: 1.25; }
+    .leading-relaxed { line-height: 1.625; }
+    .tracking-wide { letter-spacing: .025em; }
+    .tracking-wider { letter-spacing: .05em; }
+    .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .opacity-75 { opacity: .75; }
+    .opacity-80 { opacity: .80; }
+    .transition { transition: all .2s ease; }
+    @media (min-width: 640px) { .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 768px) {
+      .md\:inline-block { display: inline-block !important; }
+      .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .md\:p-9 { padding: 2.25rem; }
+      .md\:p-10 { padding: 2.5rem; }
+      .md\:p-12 { padding: 3rem; }
+      .md\:pt-12 { padding-top: 3rem; }
+      .md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+      .md\:text-5xl { font-size: 3rem; line-height: 1; }
+      .md\:text-6xl { font-size: 3.75rem; line-height: 1; }
+      .md\:text-7xl { font-size: 4.5rem; line-height: 1; }
+    }
+    @media (min-width: 1024px) { .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+    /* ===================== ZONA EDITABLE DE COLORES =====================
+       Cambia estos códigos HEX para modificar la paleta de toda la presentación.
+       Paleta actual Universidad de Cundinamarca:
+       Amarillo: #FBE122 | Dorado: #DAA000 | Verde: #007B3E | Verde oscuro: #00482B
+    */
+    :root {
+      --uc-yellow: #FBE122;
+      --uc-gold: #DAA000;
+      --uc-green: #007B3E;
+      --uc-dark-green: #00482B;
+      --uc-cream: #FFFBEA;
+      --uc-white: #FFFFFF;
+      --uc-shadow: rgba(0, 72, 43, 0.28);
+    }
+
+    * { box-sizing: border-box; font-family: 'Sora', sans-serif; }
+    body { margin: 0; background: var(--uc-cream); }
+
+    #app {
+      background:
+        radial-gradient(circle at 8% 12%, rgba(251,225,34,0.40), transparent 24%),
+        radial-gradient(circle at 94% 10%, rgba(0,123,62,0.25), transparent 22%),
+        linear-gradient(135deg, #fffbe8 0%, #f8f4d7 42%, #e8f4e8 100%);
+    }
+
+    #app::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(120deg, rgba(0,72,43,0.06) 0 1px, transparent 1px),
+        linear-gradient(30deg, rgba(218,160,0,0.08) 0 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+    }
+
+    .uc-top-strip {
+      height: 8px;
+      background: linear-gradient(90deg, var(--uc-yellow) 0 25%, var(--uc-gold) 25% 50%, var(--uc-green) 50% 75%, var(--uc-dark-green) 75% 100%);
+      box-shadow: 0 4px 16px rgba(0,72,43,0.18);
+    }
+
+    .slide { display: none; opacity: 0; transform: translateY(20px) scale(0.985); }
+    .slide.active { display: flex; animation: slideIn 0.5s ease forwards; }
+    @keyframes slideIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .uc-card {
+      position: relative;
+      width: min(980px, 100%);
+      min-height: 68vh;
+      overflow: hidden;
+      border-radius: 32px;
+      border: 1px solid rgba(0,72,43,0.16);
+      background: rgba(255,255,255,0.78);
+      box-shadow: 0 28px 80px rgba(0,72,43,0.18);
+      backdrop-filter: blur(14px);
+    }
+
+    .uc-card::before {
+      content: '';
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -85px;
+      top: -85px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(251,225,34,0.92), rgba(218,160,0,0.30) 58%, transparent 62%);
+    }
+
+    .uc-card::after {
+      content: '';
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      left: -90px;
+      bottom: -90px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(0,123,62,0.85), rgba(0,72,43,0.20) 56%, transparent 62%);
+    }
+
+    .uc-ribbon {
+      height: 12px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--uc-yellow) 0 25%, var(--uc-gold) 25% 50%, var(--uc-green) 50% 75%, var(--uc-dark-green) 75% 100%);
+    }
+
+    .uc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: .58rem 1rem;
+      border-radius: 999px;
+      color: var(--uc-dark-green);
+      background: rgba(251,225,34,0.34);
+      border: 1px solid rgba(218,160,0,0.32);
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      font-size: .78rem;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      color: white;
+      background: linear-gradient(135deg, var(--uc-green), var(--uc-dark-green));
+      box-shadow: 0 14px 28px rgba(0,72,43,0.28);
+      font-weight: 900;
+      letter-spacing: -0.08em;
+    }
+
+    .decor-blocks {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      width: min(520px, 100%);
+      height: 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 1px rgba(0,72,43,0.12);
+    }
+    .decor-blocks span:nth-child(1) { background: var(--uc-yellow); }
+    .decor-blocks span:nth-child(2) { background: var(--uc-gold); }
+    .decor-blocks span:nth-child(3) { background: var(--uc-green); }
+    .decor-blocks span:nth-child(4) { background: var(--uc-dark-green); }
+
+    .resource-btn, .nav-btn, .menu-item, .module-card, .back-btn {
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, opacity .22s ease;
+    }
+    .resource-btn, .module-card {
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 28px rgba(0,72,43,0.18);
+    }
+    .resource-btn:hover, .module-card:hover, .nav-btn:hover, .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 38px rgba(0,72,43,0.24);
+    }
+    .resource-btn::before, .module-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transform: translateX(-110%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+      transition: transform .6s ease;
+    }
+    .resource-btn:hover::before, .module-card:hover::before { transform: translateX(110%); }
+
+    .back-btn {
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+      align-self: flex-start;
+    }
+
+    @media (min-width: 768px) {
+      .back-btn { margin-top: 1.75rem; }
+    }
+
+    .sidebar-open { transform: translateX(0); }
+    .sidebar-closed { transform: translateX(-100%); }
+    .sidebar-transition { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+    .menu-item.active-item { background: rgba(251,225,34,0.16); border-left: 4px solid var(--uc-yellow); }
+    .menu-item:hover { background: rgba(255,255,255,0.11); }
+    .progress-bar, .dot { transition: all .28s ease; }
+    .dot.active-dot { width: 30px; border-radius: 999px; }
+
+    .modal { display: none; opacity: 0; transform: scale(0.95); pointer-events: none; transition: all 0.3s ease; }
+    .modal.active-modal { display: flex; opacity: 1; transform: scale(1); pointer-events: auto; }
+
+    @media (max-width: 760px) {
+      .uc-card { min-height: 70vh; border-radius: 24px; }
+      .slide-title { font-size: 2.35rem !important; }
+    }
+
+
+    /* Avatar expositor UdeC mejorado con boca animada */
+    .speaker-avatar {
+      position: absolute;
+      right: 22px;
+      bottom: 88px;
+      z-index: 35;
+      width: 255px;
+      max-width: calc(100vw - 32px);
+      border-radius: 30px;
+      background: rgba(255,255,255,.94);
+      border: 2px solid rgba(0,72,43,.20);
+      box-shadow: 0 24px 56px rgba(0,72,43,.28);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+    }
+    .speaker-avatar-header { padding: 10px 14px; color: #00482B; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; background: linear-gradient(90deg,#FBE122 0%,#DAA000 45%,#007B3E 100%); display:flex; align-items:center; justify-content:space-between; }
+    .speaker-avatar-header::after { content: '●'; color: #00482B; font-size: 14px; text-shadow: 0 0 10px rgba(251,225,34,.85); }
+    .speaker-avatar.speaking .speaker-avatar-header::after { color:#FBE122; animation: voiceBlink .7s infinite alternate; }
+    @keyframes voiceBlink { from { opacity:.35; transform:scale(.8); } to { opacity:1; transform:scale(1.15); } }
+    .speaker-avatar-body { display: flex; gap: 12px; align-items: center; padding: 12px; }
+    .avatar-video-wrap { position: relative; flex: 0 0 96px; width: 96px; height: 110px; border-radius: 30px 30px 38px 38px; overflow: visible; background: radial-gradient(circle at 50% 20%, rgba(251,225,34,.36), transparent 42%), linear-gradient(160deg,#FBE122 0%,#DAA000 46%,#007B3E 100%); border: 3px solid #00482B; box-shadow: 0 14px 28px rgba(0,72,43,.28); display:grid; place-items:center; }
+    .avatar-video-wrap::before { content:''; position:absolute; width:78px; height:15px; top:5px; left:50%; transform:translateX(-50%); border-radius:999px; background:linear-gradient(90deg,#00482B,#007B3E); box-shadow:0 6px 12px rgba(0,72,43,.24); z-index:3; }
+    .avatar-video-wrap::after { content:''; position:absolute; inset:6px; border-radius:26px 26px 34px 34px; box-shadow:inset 0 0 0 2px rgba(255,255,255,.35); pointer-events:none; z-index:5; }
+    .avatar-character { position:relative; width:72px; height:88px; display:grid; place-items:center; }
+    .avatar-head { position:absolute; top:15px; width:66px; height:66px; border-radius:48% 48% 44% 44%; background:linear-gradient(180deg,#FFE66D 0%,#FBE122 60%,#E4B300 100%); border:3px solid #00482B; box-shadow:inset 0 -8px 0 rgba(218,160,0,.20),0 10px 18px rgba(0,72,43,.18); z-index:2; }
+    .avatar-face-glow { position:absolute; top:28px; left:50%; width:42px; height:34px; transform:translateX(-50%); border-radius:50%; background:rgba(255,255,255,.18); z-index:3; pointer-events:none; }
+    .avatar-eye { position:absolute; top:39px; width:8px; height:10px; border-radius:999px; background:#00482B; z-index:4; animation:avatarBlink 4.2s infinite; }
+    .avatar-eye.left { left:22px; }
+    .avatar-eye.right { right:22px; }
+    @keyframes avatarBlink { 0%,92%,100% { transform:scaleY(1); } 95% { transform:scaleY(.12); } }
+    .avatar-mouth { position:absolute; left:50%; top:58px; width:24px; height:10px; transform:translateX(-50%); border-radius:0 0 18px 18px; background:#00482B; z-index:4; box-shadow:inset 0 -3px 0 rgba(0,0,0,.16); }
+    .avatar-mouth::after { content:''; position:absolute; left:50%; bottom:2px; width:12px; height:3px; transform:translateX(-50%); border-radius:999px; background:rgba(251,225,34,.75); }
+    .avatar-body-shape { position:absolute; bottom:-5px; width:60px; height:28px; border-radius:22px 22px 10px 10px; background:linear-gradient(135deg,#00482B,#007B3E); border:3px solid #00482B; z-index:1; }
+    .avatar-sound-waves { position:absolute; right:-10px; top:36px; width:20px; height:38px; opacity:0; z-index:6; }
+    .avatar-sound-waves span { position:absolute; left:0; border:3px solid #FBE122; border-left:0; border-top-color:transparent; border-bottom-color:transparent; border-radius:0 999px 999px 0; filter:drop-shadow(0 0 6px rgba(251,225,34,.65)); }
+    .avatar-sound-waves span:nth-child(1){ width:10px;height:18px;top:10px; }
+    .avatar-sound-waves span:nth-child(2){ width:17px;height:28px;top:5px; }
+    .speaker-avatar.speaking .avatar-video-wrap { animation:avatarPulse .7s ease-in-out infinite alternate; }
+    .speaker-avatar.speaking .avatar-mouth { animation:mouthTalk .16s linear infinite alternate; border-radius:50% 50% 45% 45%; }
+    .speaker-avatar.speaking .avatar-sound-waves { opacity:1; animation:soundWave .65s ease-in-out infinite alternate; }
+    @keyframes avatarPulse { from { transform:translateY(0) scale(1); } to { transform:translateY(-2px) scale(1.035); } }
+    @keyframes mouthTalk { 0% { width:18px;height:5px;top:60px; } 40% { width:26px;height:14px;top:56px; } 100% { width:20px;height:19px;top:54px; } }
+    @keyframes soundWave { from { transform:translateX(-2px) scale(.86); opacity:.45; } to { transform:translateX(3px) scale(1.12); opacity:1; } }
+    .avatar-info { text-align:left; min-width:0; }
+    .avatar-name { color:#00482B; font-size:15px; font-weight:900; line-height:1.1; }
+    .avatar-status { margin-top:5px; color:rgba(0,72,43,.74); font-size:11px; line-height:1.25; }
+    .avatar-controls { display:flex; gap:7px; padding:0 12px 12px; }
+    .avatar-mini-btn { flex:1; border:0; border-radius:999px; padding:8px 9px; font-size:11px; font-weight:900; color:white; background:#00482B; cursor:pointer; box-shadow:0 8px 18px rgba(0,72,43,.20); }
+    .avatar-mini-btn.secondary { background:#007B3E; }
+    .avatar-mini-btn:hover { transform:translateY(-1px); }
+
+    .speak-hover-highlight {
+      outline: 3px solid rgba(251,225,34,.95);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 8px rgba(251,225,34,.18), 0 18px 38px rgba(0,72,43,.20) !important;
+    }
+    @media (max-width: 760px) { .speaker-avatar { right: 12px; bottom: 78px; width: 215px; } .speaker-avatar-body { padding: 9px; gap:8px; } .avatar-video-wrap { width: 78px; height: 92px; flex-basis: 78px; } .avatar-character { transform: scale(.82); } .avatar-name { font-size: 12px; } .avatar-status { font-size: 10px; } }
+
+  
+    /* ===================== DISEÑO TIPO BOTSTART PARA SUBPANTALLAS =====================
+       Este bloque mejora las pantallas que se abren al hacer clic en Comencemos,
+       módulos o secciones. Evita que el Paso 1 se recorte y da un estilo más moderno. */
+    .botstart-panel-card {
+      width: min(1080px, 100%);
+      min-height: 64vh;
+      max-height: calc(100vh - 150px);
+      border-radius: 34px;
+      overflow: hidden;
+      border: 1px solid rgba(0,72,43,.18);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(251,225,34,.52), transparent 26%),
+        radial-gradient(circle at 94% 18%, rgba(0,123,62,.22), transparent 28%),
+        linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,251,234,.88));
+      box-shadow: 0 30px 90px rgba(0,72,43,.22);
+      backdrop-filter: blur(16px);
+    }
+    .botstart-panel-scroll {
+      position: relative;
+      z-index: 10;
+      height: 100%;
+      max-height: calc(100vh - 150px);
+      overflow-y: auto;
+      padding: 34px;
+      padding-bottom: 130px;
+      scrollbar-width: thin;
+      scrollbar-color: #007B3E rgba(0,72,43,.08);
+    }
+    .botstart-hero-row {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-top: 10px;
+    }
+    .botstart-hero-copy {
+      text-align: left;
+      border-radius: 28px;
+      padding: 26px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(0,72,43,.12);
+      box-shadow: 0 18px 45px rgba(0,72,43,.10);
+    }
+    .botstart-hero-visual {
+      border-radius: 28px;
+      padding: 22px;
+      background: linear-gradient(135deg,#00482B,#007B3E 55%,#DAA000);
+      color: white;
+      text-align: left;
+      box-shadow: 0 18px 45px rgba(0,72,43,.22);
+      overflow: hidden;
+      position: relative;
+    }
+    .botstart-hero-visual::after {
+      content: '';
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -50px;
+      bottom: -50px;
+      border-radius: 999px;
+      background: rgba(251,225,34,.35);
+    }
+    .botstart-back-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 12px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #00482B;
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 14px 28px rgba(0,72,43,.22);
+      margin-bottom: 18px;
+    }
+    .botstart-step-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      width: 100%;
+      margin-top: 24px;
+    }
+    .botstart-step-card {
+      border: 0;
+      cursor: pointer;
+      min-height: 230px;
+      border-radius: 30px;
+      padding: 22px;
+      text-align: left;
+      color: #00482B;
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(0,72,43,.13);
+      box-shadow: 0 18px 42px rgba(0,72,43,.14);
+      transition: transform .22s ease, box-shadow .22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .botstart-step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 54px rgba(0,72,43,.22);
+    }
+    .botstart-step-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(251,225,34,.28), transparent 55%);
+      pointer-events: none;
+    }
+    .botstart-step-number {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg,#FBE122,#DAA000);
+      color: #00482B;
+      font-weight: 900;
+      font-size: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 12px 22px rgba(218,160,0,.20);
+      position: relative;
+      z-index: 2;
+    }
+    .botstart-step-card h3,
+    .botstart-step-card p,
+    .botstart-step-card span {
+      position: relative;
+      z-index: 2;
+    }
+    .botstart-step-title { font-size: 18px; font-weight: 900; line-height: 1.22; margin-bottom: 10px; }
+    .botstart-step-summary { font-size: 13.5px; line-height: 1.55; opacity: .78; }
+    .botstart-open-pill {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: #00482B;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .botstart-section-detail {
+      margin-top: 24px;
+      max-width: 900px;
+      width: 100%;
+      text-align: left;
+      border-radius: 30px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(0,72,43,.14);
+      box-shadow: 0 22px 56px rgba(0,72,43,.14);
+      padding: 30px;
+      color: #00482B;
+    }
+    .botstart-section-detail p { font-size: 18px; line-height: 1.75; opacity: .84; }
+    .botstart-mini-chips { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+    .botstart-mini-chips span { padding:8px 12px; border-radius:999px; background:rgba(251,225,34,.42); color:#00482B; font-size:12px; font-weight:900; }
+    @media (max-width: 980px) {
+      .botstart-hero-row, .botstart-step-grid { grid-template-columns: 1fr; }
+      .botstart-panel-scroll { padding: 24px; padding-bottom: 150px; }
+      .botstart-step-card { min-height: auto; }
+    }
+
+  </style>
+</head>
+<body class="h-full">
+  <div id="app" class="h-full w-full flex overflow-hidden relative">
+    <aside id="sidebar" class="sidebar-transition sidebar-closed absolute z-30 top-0 left-0 h-full w-72 flex flex-col py-6 px-4 text-white" style="background:linear-gradient(180deg,#00482B,#00351F);">
+      <div class="flex items-center justify-between mb-8 px-2">
+        <div class="flex items-center gap-3">
+          <div class="brand-mark" style="width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#FBE122,#007B3E);color:#00482B;">UC</div>
+          <div>
+            <div class="font-extrabold tracking-wide">Hojas</div>
+            <div class="text-xs text-white/55">Universidad de Cundinamarca</div>
+          </div>
+        </div>
+        <button id="closeMenu" class="text-white/70 hover:text-white"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+      </div>
+      <nav id="slideMenu" class="flex flex-col gap-1 flex-1"></nav>
+      <div class="mt-4 px-2 text-white/45 text-xs">Usa ← → o los botones</div>
+    </aside>
+
+    <div id="overlay" class="hidden absolute inset-0 z-20 bg-black/40" style="cursor:pointer;"></div>
+
+    <main class="flex-1 flex flex-col h-full relative z-10">
+      <div class="uc-top-strip shrink-0"></div>
+      <header class="flex items-center justify-between px-5 py-3 shrink-0">
+        <button id="menuBtn" class="nav-btn text-white p-2 rounded-xl" style="background:#00482B;">
+          <i data-lucide="menu" style="width:20px;height:20px;"></i>
+        </button>
+        <div class="flex items-center gap-3">
+          <span id="slideCounter" class="text-sm font-extrabold tracking-wider" style="color:#00482B;"></span>
+          <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(251,225,34,.45);color:#00482B;">Paleta UdeC</span>
+        </div>
+        <button id="fullscreenBtn" class="nav-btn text-white p-2 rounded-xl" style="background:#007B3E;">
+          <i data-lucide="maximize-2" style="width:18px;height:18px;"></i>
+        </button>
+      </header>
+
+      <div class="w-full h-1.5 shrink-0" style="background:rgba(0,72,43,0.12);">
+        <div id="progressBar" class="progress-bar h-full rounded-r" style="background:linear-gradient(90deg,#FBE122,#DAA000,#007B3E,#00482B);width:20%;"></div>
+      </div>
+
+      <div id="slidesContainer" class="flex-1 flex items-center justify-center px-5 py-5 overflow-auto"></div>
+
+      <footer class="flex items-center justify-center gap-4 py-4 shrink-0">
+     <!-- BOTÓN PARA RETROCEDER: este botón siempre aparece en la parte inferior. -->
+     <button id="prevBtn" class="nav-btn back-nav-btn flex items-center justify-center text-white" style="background:#00482B;" title="Atrás" data-speak="Botón Atrás.">
+       <i data-lucide="chevron-left" style="width:22px;height:22px;"></i>
+       <span>Atrás</span>
+     </button>
+     <div id="dots" class="flex items-center gap-2"></div>
+     <!-- BOTÓN PARA AVANZAR: este botón siempre aparece en la parte inferior. -->
+     <button id="nextBtn" class="nav-btn next-nav-btn flex items-center justify-center text-white" style="background:#007B3E;" title="Siguiente" data-speak="Botón Siguiente.">
+       <span>Siguiente</span>
+       <i data-lucide="chevron-right" style="width:22px;height:22px;"></i>
+     </button>
+    </footer>
+    </main>
+
+    <!-- ===================== AVATAR EXPOSITOR =====================
+        Aquí puedes cambiar el nombre del agente, los textos del estado y los botones.
+        La animación de la boca se controla con CSS y JavaScript más abajo.
+      -->
+    <div id="speakerAvatar" class="speaker-avatar" title="Pasa el cursor por un texto para escuchar">
+      <div class="speaker-avatar-header">Avatar expositor</div>
+      <div class="speaker-avatar-body">
+        <div class="avatar-video-wrap" aria-hidden="true">
+          <div class="avatar-character">
+            <div class="avatar-body-shape"></div>
+            <div class="avatar-head"></div>
+            <div class="avatar-face-glow"></div>
+            <div class="avatar-eye left"></div>
+            <div class="avatar-eye right"></div>
+            <div class="avatar-mouth"></div>
+            <div class="avatar-sound-waves"><span></span><span></span></div>
+          </div>
+        </div>
+        <div class="avatar-info">
+          <!-- Cambia aquí el nombre visible del avatar -->
+          <!-- Cambia aquí el nombre visible del avatar -->
+          <div class="avatar-name">Profe UdeC</div>
+          <div id="avatarStatus" class="avatar-status">Cursor fuera del elemento. Voz detenida.</div>
+        </div>
+      </div>
+      <div class="avatar-controls">
+        <button id="avatarRepeatBtn" class="avatar-mini-btn" type="button">Repetir</button>
+        <button id="avatarStopBtn" class="avatar-mini-btn secondary" type="button">Silenciar</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="resourceModal" class="modal fixed inset-0 z-50 items-center justify-center p-4">
+    <div class="rounded-3xl shadow-2xl max-w-2xl w-full max-h-96 overflow-y-auto" style="background:#fffbea;border:1px solid rgba(0,72,43,0.20);">
+      <div class="sticky top-0 flex items-center justify-between p-6 border-b" style="background:linear-gradient(90deg,#00482B,#007B3E);border-color:rgba(255,255,255,0.1);">
+        <h2 id="resourceTitle" class="text-2xl font-bold text-white"></h2>
+        <button onclick="closeResourceModal()" class="text-white/75 hover:text-white transition"><i data-lucide="x" style="width:24px;height:24px;"></i></button>
+      </div>
+      <div id="resourceContent" class="p-6 space-y-4" style="color:#00482B;"></div>
+    </div>
+  </div>
+
+<script>
+/* =====================================================================
+   GUÍA RÁPIDA PARA EDITAR LA PRESENTACIÓN
+   ---------------------------------------------------------------------
+   1. Títulos principales: edita defaultConfig.
+   2. Texto de cada hoja: edita slidesData.
+   3. Botones de la hoja Bienvenidos: edita btn_start_text, btn_population_text y btn_rea_text.
+   4. Contenido de los submenús: edita startMenuData, populationMenuData y reaMenuData.
+   5. Módulos y secciones: edita contentModulesData.
+   6. Saludo inicial de la voz: busca la variable welcomeText en speakStartupWelcome().
+   7. Voz del avatar: edita rate, pitch y volume en speakText() y speakStartupWelcome().
+   ===================================================================== */
+
+// ===================== 1. CONFIGURACIÓN GENERAL EDITABLE =====================
+// Estos valores controlan títulos, nombres de botones, colores, fuente y tamaño base.
+const defaultConfig = {
+  // Título de la primera hoja
+  main_title: "Bienvenidos",
+
+  // Título de la segunda hoja
+  content_title: "Contenido",
+
+  // Texto de los tres botones de la primera hoja
+  btn_start_text: "Comencemos",
+  btn_population_text: "Población Objeto",
+  btn_rea_text: "REA",
+
+  // Colores principales de la presentación
+  primary_color: "#007B3E",
+  background_color: "#FFFBEA",
+  text_color: "#00482B",
+  surface_color: "#FFFFFF",
+  accent_color: "#FBE122",
+
+  // Fuente y tamaño general
+  font_family: "Sora",
+  font_size: 16
+};
+
+// ===================== 2. HOJAS PRINCIPALES EDITABLES =====================
+// Cada línea representa una hoja de la presentación.
+// body = texto de la hoja.
+// accent = emoji o símbolo grande de la hoja.
+// twoButtons: true = indica que la hoja tiene los botones Comencemos, Población y REA.
+// contentSlide: true = indica que la hoja muestra los módulos.
+const slidesData = [
+  // Hoja 1: Bienvenidos
+  { icon: "sparkles", body: "Una presentación interactiva inspirada en la paleta institucional de la Universidad de Cundinamarca.", accent: "🎓", twoButtons: true },
+  // Hoja 2: Contenido
+  { icon: "book", body: "Explora contenido temático organizado en 6 módulos.", accent: "📚", contentSlide: true },
+
+  // Hoja 3: Sobre Nosotros
+  { icon: "users", body: "Somos un equipo comprometido con la innovación, el aprendizaje y el desarrollo creativo.", accent: "👥" },
+
+  // Hoja 4: Servicios
+  { icon: "zap", body: "Ofrecemos soluciones digitales, diseño y desarrollo a medida.", accent: "⚡" },
+
+  // Hoja 5: Contacto
+  { icon: "mail", body: "¿Listo para colaborar? Escríbenos y hagamos algo increíble juntos.", accent: "✉️" }
+];
+
+// ===================== 3. SUBMENÚ DEL BOTÓN "COMENCEMOS" =====================
+// Cambia title, subtitle y las secciones para modificar lo que aparece al presionar Comencemos.
+const startMenuData = {
+  title: "Comencemos",
+  subtitle: "Tres pasos para comprender la wiki del ODC",
+  sections: [
+    {
+      title: "Paso 1: ¿Qué es una wiki educativa?",
+      content: `Una wiki educativa es un recurso digital organizado por páginas enlazadas entre sí. Permite consultar información de forma flexible, navegar por temas relacionados y construir conocimiento de manera progresiva. En este ODC, la wiki se usa para facilitar el aprendizaje introductorio de redes de comunicación, porque organiza conceptos como dispositivos, topologías, protocolos, direccionamiento IP y seguridad básica en secciones claras, breves e interactivas. Su propósito no es solo presentar teoría, sino ofrecer una ruta de aprendizaje que ayude al estudiante principiante a repasar, relacionar conceptos y avanzar a su propio ritmo.`
+    },
+    {
+      title: "Paso 2: ¿Cómo crear una wiki para aprender redes?",
+      content: `Para crear una wiki educativa se debe iniciar con un objetivo claro de aprendizaje, definir la población objetivo y organizar los contenidos por módulos. Primero se seleccionan los temas principales, por ejemplo: fundamentos de redes, dispositivos de interconexión, topologías, protocolos, direccionamiento IP y seguridad básica. Luego se crean páginas breves para cada tema, se agregan ejemplos cotidianos, imágenes, glosarios, actividades de verificación y enlaces internos para conectar conceptos. Finalmente, se incluyen botones, retroalimentación y navegación sencilla para que el estudiante pueda consultar la información sin perderse dentro del recurso.`
+    },
+    {
+      title: "Paso 3: Aplicación y conclusiones del ODC",
+      content: `El ODC basado en una wiki permite transformar contenidos técnicos en una experiencia de aprendizaje más clara, visual e interactiva. Su aplicación ayuda a reducir la dificultad inicial que tienen muchos estudiantes al acercarse a las redes de comunicación, ya que combina explicación gradual, navegación modular, apoyos visuales y actividades de realimentación. Como conclusión, una wiki bien diseñada favorece la autonomía, el repaso selectivo y la comprensión progresiva; además, fortalece el vínculo entre tecnología educativa, pedagogía digital e infraestructura de redes.`
+    }
+  ]
+};
+
+// ===================== 4. SUBMENÚ DEL BOTÓN "POBLACIÓN OBJETIVO" =====================
+// Aquí puedes cambiar el público al que va dirigida la presentación.
+const populationMenuData = {
+  title: "Población Objetivo",
+  subtitle: "A quién va dirigido",
+  sections: [
+    { title: "Emprendedores", content: "Personas con ideas innovadoras y ganas de crear su propio camino." },
+    { title: "Profesionales", content: "Expertos buscando ampliar sus habilidades y conocimientos." },
+    { title: "Empresas", content: "Pymes que desean digitalizar y transformar sus operaciones." }
+  ]
+};
+
+// ===================== 5. SUBMENÚ DEL BOTÓN "REA" =====================
+// Aquí puedes editar la información de Recursos Educativos Abiertos.
+const reaMenuData = {
+  title: "REA - Recursos Educativos Abiertos",
+  subtitle: "Educación accesible para todos",
+  sections: [
+    { title: "¿Qué son los REA?", content: "Los Recursos Educativos Abiertos son materiales de libre acceso con licencia abierta que pueden ser usados, adaptados y distribuidos libremente." },
+    { title: "Características", content: "Son gratuitos, accesibles en múltiples formatos, reutilizables y promueven la educación inclusiva." },
+    { title: "Ejemplos Prácticos", content: "Cursos en línea, libros digitales, videos educativos, simulaciones interactivas y más." }
+  ]
+};
+
+// ===================== 6. MÓDULOS DE LA HOJA "CONTENIDO" =====================
+// Para agregar un módulo, copia un bloque completo { title, subtitle, sections }.
+// Para eliminar un módulo, borra su bloque completo.
+// Cada módulo puede tener varias secciones dentro de sections.
+const contentModulesData = [
+  { title: "Módulo 1: Fundamentos", subtitle: "Bases sólidas para el éxito", sections: [
+    { title: "Conceptos Básicos", content: "Aprende los principios fundamentales que respaldan todo el programa." },
+    { title: "Objetivos", content: "Comprende qué lograrás al final de este módulo." },
+    { title: "Actividades", content: "Participa en ejercicios prácticos diseñados para consolidar tu aprendizaje." }
+  ]},
+  { title: "Módulo 2: Estrategia", subtitle: "Planificación inteligente", sections: [
+    { title: "Análisis de Mercado", content: "Estudia las tendencias y oportunidades en tu sector." },
+    { title: "Planificación Estratégica", content: "Desarrolla una hoja de ruta clara para alcanzar tus objetivos." },
+    { title: "Herramientas Digitales", content: "Utiliza plataformas y software para optimizar tu estrategia." }
+  ]},
+  { title: "Módulo 3: Implementación", subtitle: "Llevando ideas a la acción", sections: [
+    { title: "Ejecución", content: "Aprende cómo ejecutar tu plan paso a paso." },
+    { title: "Gestión de Riesgos", content: "Identifica y mitiga posibles obstáculos en el camino." },
+    { title: "Seguimiento", content: "Monitorea tu progreso y ajusta según sea necesario." }
+  ]},
+  { title: "Módulo 4: Innovación", subtitle: "Creando soluciones únicas", sections: [
+    { title: "Pensamiento Creativo", content: "Desarrolla habilidades para generar ideas innovadoras." },
+    { title: "Diseño de Producto", content: "Crea soluciones que resuelven problemas reales." },
+    { title: "Prototipado", content: "Construye versiones iniciales para validar tus conceptos." }
+  ]},
+  { title: "Módulo 5: Escalabilidad", subtitle: "Crecimiento sostenible", sections: [
+    { title: "Procesos Automatizados", content: "Diseña procesos que escalen sin aumentar costos." },
+    { title: "Gestión de Equipos", content: "Aprende a construir y liderar equipos efectivos." },
+    { title: "Métricas y KPIs", content: "Mide el éxito con indicadores clave de desempeño." }
+  ]},
+  { title: "Módulo 6: Impacto Social", subtitle: "Negocio con propósito", sections: [
+    { title: "Responsabilidad Social", content: "Crea valor para la sociedad mientras creces económicamente." },
+    { title: "Sostenibilidad", content: "Implementa prácticas amigables con el medio ambiente." },
+    { title: "Comunidad", content: "Construye conexiones significativas con tu audiencia." }
+  ]}
+];
+
+let currentSlide = 0;
+let sidebarOpen = false;
+let currentView = "main";
+let submenuType = null;
+let currentModuleIndex = -1;
+let currentSectionIndex = -1;
+
+function cfg() { return window.elementSdk ? window.elementSdk.config : defaultConfig; }
+function safeText(value, fallback) { return value || fallback; }
+function escapeAttr(value) { return String(value || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function colorBlocks() { return `<div class="decor-blocks"><span></span><span></span><span></span><span></span></div>`; }
+function icon(name, size = 20) { return `<i data-lucide="${name}" style="width:${size}px;height:${size}px;"></i>`; }
+
+function slideShell(inner, extra = "") {
+  return `<div class="uc-card ${extra}"><div class="uc-ribbon"></div><div class="relative z-10 h-full flex flex-col items-center justify-center text-center gap-6 p-7 md:p-12">${inner}</div></div>`;
+}
+
+function buildSlides(config = cfg()) {
+  const container = document.getElementById('slidesContainer');
+  const titles = [
+    safeText(config.main_title, defaultConfig.main_title),
+    safeText(config.content_title, defaultConfig.content_title),
+    "Sobre Nosotros",
+    "Servicios",
+    "Contacto"
+  ];
+  const slideWelcome = (index, body) => index === 0 ? `${titles[index]}. ${body}` : `Bienvenidos a la hoja ${titles[index]}. ${body}`;
+
+  container.innerHTML = slidesData.map((s, i) => {
+    if (s.twoButtons) {
+      const inner = `
+        <div class="flex items-center gap-4 mb-2">
+          <div class="brand-mark">UC</div>
+          <div class="text-left">
+            <div class="uc-badge">Universidad de Cundinamarca</div>
+            <div class="text-xs mt-2 font-bold" style="color:#007B3E;">Diseño institucional · Paleta principal</div>
+          </div>
+        </div>
+        <div class="text-6xl md:text-7xl">${s.accent}</div>
+        <h1 class="slide-title text-5xl md:text-7xl font-extrabold leading-tight" style="color:#00482B;" data-speak="${escapeAttr(slideWelcome(0, s.body))}">${titles[0]}</h1>
+        <p class="slide-body text-lg md:text-xl leading-relaxed max-w-2xl" style="color:#00482B;opacity:.78;" data-speak="${escapeAttr(s.body)}">${s.body}</p>
+        ${colorBlocks()}
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
+          <button class="resource-btn px-6 py-4 rounded-2xl font-extrabold flex items-center justify-center gap-3" style="background:linear-gradient(135deg,#007B3E,#00482B);color:white;" data-speak="${escapeAttr('Botón Comencemos. Abre el menú de introducción.')}" onclick="openSubmenu('start')">${icon('play',18)} ${safeText(config.btn_start_text, 'Comencemos')}</button>
+          <button class="resource-btn px-6 py-4 rounded-2xl font-extrabold flex items-center justify-center gap-3" style="background:linear-gradient(135deg,#FBE122,#DAA000);color:#00482B;" data-speak="${escapeAttr('Botón Población Objetivo. Abre la información sobre a quién va dirigida la presentación.')}" onclick="openSubmenu('population')">${icon('users',18)} ${safeText(config.btn_population_text, 'Población Objeto')}</button>
+        </div>
+        <button class="resource-btn px-7 py-4 rounded-2xl font-extrabold flex items-center justify-center gap-3" style="background:#FFFFFF;color:#00482B;border:2px solid rgba(0,123,62,.25);" data-speak="${escapeAttr('Botón REA. Abre los recursos educativos abiertos.')}" onclick="openSubmenu('rea')">${icon('book-open',18)} ${safeText(config.btn_rea_text, 'REA')}</button>
+      `;
+      return `<section class="slide ${i === currentSlide ? 'active' : ''} w-full items-center justify-center" data-slide="${i}">${slideShell(inner)}</section>`;
+    }
+
+    if (s.contentSlide) {
+      const inner = `
+        <div class="uc-badge">Ruta de aprendizaje</div>
+        <div class="text-6xl">${s.accent}</div>
+        <h1 class="slide-title text-4xl md:text-6xl font-extrabold" style="color:#00482B;" data-speak="${escapeAttr(slideWelcome(i, s.body))}">${titles[i]}</h1>
+        <p class="slide-body text-lg leading-relaxed max-w-2xl" style="color:#00482B;opacity:.74;" data-speak="${escapeAttr(s.body)}">${s.body}</p>
+        ${colorBlocks()}
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+          ${contentModulesData.map((module, idx) => `
+            <button class="module-card p-5 rounded-3xl text-left" style="background:${idx % 2 === 0 ? 'linear-gradient(135deg,#007B3E,#00482B)' : 'linear-gradient(135deg,#FBE122,#DAA000)'};color:${idx % 2 === 0 ? 'white' : '#00482B'};" data-speak="${escapeAttr('Botón de la hoja Contenido. '+module.title+'. '+module.subtitle)}" onclick="openModule(${idx})">
+              <div class="text-3xl mb-3">${['🎯','📊','🚀','💡','📈','🌍'][idx]}</div>
+              <div class="font-extrabold text-lg">${module.title}</div>
+              <div class="text-sm opacity-80 mt-1">${module.subtitle}</div>
+            </button>
+          `).join('')}
+        </div>`;
+      return `<section class="slide ${i === currentSlide ? 'active' : ''} w-full items-center justify-center" data-slide="${i}">${slideShell(inner)}</section>`;
+    }
+
+    const inner = `
+      <div class="uc-badge">Presentación interactiva</div>
+      <div class="text-6xl">${s.accent}</div>
+      <h1 class="slide-title text-4xl md:text-6xl font-extrabold" style="color:#00482B;" data-speak="${escapeAttr(slideWelcome(i, s.body))}">${titles[i]}</h1>
+      <p class="slide-body text-lg md:text-xl leading-relaxed max-w-2xl" style="color:#00482B;opacity:.76;" data-speak="${escapeAttr(s.body)}">${s.body}</p>
+      ${colorBlocks()}
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-xl mt-4">
+        <div class="rounded-2xl p-4 font-bold" style="background:#FBE122;color:#00482B;">Creatividad</div>
+        <div class="rounded-2xl p-4 font-bold" style="background:#DAA000;color:white;">Proceso</div>
+        <div class="rounded-2xl p-4 font-bold" style="background:#007B3E;color:white;">Impacto</div>
+        <div class="rounded-2xl p-4 font-bold" style="background:#00482B;color:white;">Futuro</div>
+      </div>`;
+    return `<section class="slide ${i === currentSlide ? 'active' : ''} w-full items-center justify-center" data-slide="${i}">${slideShell(inner)}</section>`;
+  }).join('');
+
+  buildMenu(titles);
+  updateSlideUI(config);
+  lucide.createIcons();
+}
+
+function buildMenu(titles) {
+  const menu = document.getElementById('slideMenu');
+  menu.innerHTML = titles.map((t, i) => `
+    <button class="menu-item ${i === currentSlide ? 'active-item' : ''} flex items-center gap-3 px-3 py-3 rounded-xl text-left text-sm text-white/85" data-speak="${escapeAttr(i === 0 ? 'Botón del menú. Abre la hoja de inicio.' : 'Botón del menú. Bienvenidos a la hoja ' + t + '. Haz clic para abrir esta hoja.')}" onclick="goToSlide(${i})">
+      <span class="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold" style="background:${i === currentSlide ? '#FBE122' : 'rgba(255,255,255,0.10)'};color:${i === currentSlide ? '#00482B' : 'white'};">${i + 1}</span>
+      <span class="truncate">${t}</span>
+    </button>`).join('');
+}
+
+function updateSlideUI(config = cfg()) {
+  const total = slidesData.length;
+  document.querySelectorAll('.slide').forEach((el, i) => el.classList.toggle('active', i === currentSlide));
+  document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${total}`;
+  const slideNamesForVoice = [safeText(cfg().main_title, defaultConfig.main_title), safeText(cfg().content_title, defaultConfig.content_title), 'Qué son las wikis', 'Cómo crear una wiki', 'Conclusiones'];
+  const activeTitleForVoice = slideNamesForVoice[currentSlide] || 'esta hoja';
+  document.getElementById('slideCounter').setAttribute('data-speak', currentSlide === 0 ? `Hoja ${currentSlide + 1} de ${total}. Hoja de inicio.` : `Hoja ${currentSlide + 1} de ${total}. Bienvenidos a la hoja ${activeTitleForVoice}.`);
+  const prevVoiceTitle = slideNamesForVoice[(currentSlide - 1 + total) % total] || 'anterior';
+  const nextVoiceTitle = slideNamesForVoice[(currentSlide + 1) % total] || 'siguiente';
+  const prevBtnForVoice = document.getElementById('prevBtn');
+  const nextBtnForVoice = document.getElementById('nextBtn');
+  if (prevBtnForVoice) prevBtnForVoice.setAttribute('data-speak', `Botón Atrás. Te lleva a la hoja ${prevVoiceTitle}.`);
+  if (nextBtnForVoice) nextBtnForVoice.setAttribute('data-speak', `Botón Siguiente. Te lleva a la hoja ${nextVoiceTitle}.`);
+  document.getElementById('progressBar').style.width = `${((currentSlide + 1) / total) * 100}%`;
+
+  const dots = document.getElementById('dots');
+  dots.innerHTML = Array.from({ length: total }, (_, i) =>
+    `<button onclick="goToSlide(${i})" class="dot h-2 rounded-full ${i === currentSlide ? 'active-dot' : 'w-2'}" style="background:${i === currentSlide ? '#00482B' : 'rgba(0,72,43,0.25)'};"></button>`
+  ).join('');
+
+  document.querySelectorAll('.menu-item').forEach((el, i) => {
+    el.classList.toggle('active-item', i === currentSlide);
+    const badge = el.querySelector('span');
+    if (badge) {
+      badge.style.background = i === currentSlide ? '#FBE122' : 'rgba(255,255,255,0.10)';
+      badge.style.color = i === currentSlide ? '#00482B' : 'white';
+    }
+  });
+}
+
+function summarizeText(text, max = 145) {
+  const clean = String(text || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  return clean.length > max ? clean.slice(0, max).trim() + '…' : clean;
+}
+
+function renderPanel(title, subtitle, contentHtml, backAction, visualText = 'Wiki educativa interactiva') {
+  const container = document.getElementById('slidesContainer');
+  container.innerHTML = `
+    <div class="botstart-panel-card">
+      <div class="uc-ribbon"></div>
+      <div class="botstart-panel-scroll">
+        <!-- BOTÓN ATRÁS DE SUBMENÚS/MÓDULOS/SECCIONES -->
+        <button class="botstart-back-btn" onclick="${backAction}()" data-speak="Botón Atrás. Regresa a la pantalla anterior.">
+          ${icon('arrow-left',18)} Atrás
+        </button>
+        <div class="botstart-hero-row">
+          <div class="botstart-hero-copy">
+            <div class="uc-badge" data-speak="Universidad de Cundinamarca">Universidad de Cundinamarca</div>
+            <h1 class="text-3xl md:text-5xl font-extrabold mt-4" style="color:#00482B;" data-speak="${escapeAttr(title)}">${title}</h1>
+            <p class="text-lg max-w-2xl mt-3" style="color:#007B3E;opacity:.88;" data-speak="${escapeAttr(subtitle)}">${subtitle}</p>
+            <div class="mt-5">${colorBlocks()}</div>
+          </div>
+          <div class="botstart-hero-visual" data-speak="${escapeAttr(visualText)}">
+            <div style="position:relative;z-index:2;">
+              <div style="font-size:42px;margin-bottom:12px;">🤖📚</div>
+              <div style="font-size:22px;font-weight:900;line-height:1.2;">Modelo interactivo tipo asistente</div>
+              <p style="font-size:14px;line-height:1.6;opacity:.84;margin-top:10px;">Haz clic en cada tarjeta para abrir la explicación completa. El avatar leerá los textos al pasar el cursor.</p>
+            </div>
+          </div>
+        </div>
+        ${contentHtml}
+      </div>
+    </div>`;
+  lucide.createIcons();
+}
+
+// Renderiza los submenús de los botones de la primera hoja.
+// En Comencemos solo se muestran tarjetas resumidas para evitar que el Paso 1 quede recortado.
+function renderSubmenu(menuData) {
+  const isStartMenu = menuData === startMenuData;
+  const content = `<div class="botstart-step-grid">
+    ${menuData.sections.map((section, idx) => `
+      <button class="botstart-step-card" onclick="openSubmenuSection(${idx})" data-speak="${escapeAttr(section.title + '. ' + summarizeText(section.content, 120))}">
+        <div class="botstart-step-number">${idx + 1}</div>
+        <h3 class="botstart-step-title">${section.title}</h3>
+        <p class="botstart-step-summary">${summarizeText(section.content, isStartMenu ? 132 : 155)}</p>
+        <span class="botstart-open-pill">Abrir información ${icon('arrow-right',14)}</span>
+      </button>`).join('')}
+  </div>`;
+  renderPanel(menuData.title, menuData.subtitle, content, 'goToMainView', isStartMenu ? 'Comencemos. Tres pasos para aprender qué es una wiki, cómo crearla y cómo aplicarla al ODC de redes.' : menuData.subtitle);
+}
+
+// Renderiza un módulo y sus secciones en pantalla.
+function renderModule(moduleData) {
+  const content = `<div class="botstart-step-grid">
+    ${moduleData.sections.map((section, idx) => `
+      <button class="botstart-step-card" onclick="openModuleSection(${idx})" data-speak="${escapeAttr(section.title + '. ' + summarizeText(section.content, 120))}">
+        <div class="botstart-step-number">${idx + 1}</div>
+        <h3 class="botstart-step-title">${section.title}</h3>
+        <p class="botstart-step-summary">${summarizeText(section.content, 150)}</p>
+        <span class="botstart-open-pill">Ver detalle ${icon('arrow-right',14)}</span>
+      </button>`).join('')}
+  </div>`;
+  renderPanel(moduleData.title, moduleData.subtitle, content, 'goToContentView', moduleData.title + '. ' + moduleData.subtitle);
+}
+
+function renderSection(sectionTitle, sectionContent, backAction) {
+  const content = `
+    <div class="botstart-section-detail" data-speak="${escapeAttr(sectionTitle + '. ' + sectionContent)}">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:#FBE122;color:#00482B;">${icon('check-circle',24)}</div>
+        <h2 class="text-2xl font-extrabold">${sectionTitle}</h2>
+      </div>
+      <p>${sectionContent}</p>
+      <div class="botstart-mini-chips">
+        <span>Wiki</span><span>Aprendizaje</span><span>Redes</span><span>ODC</span>
+      </div>
+    </div>`;
+  renderPanel(sectionTitle, "Información desplegada del paso seleccionado", content, backAction, 'Detalle del tema seleccionado dentro de la wiki interactiva.');
+}
+
+function openSubmenu(type) {
+  currentView = "submenu";
+  submenuType = type;
+  currentSectionIndex = -1;
+  if (type === "start") renderSubmenu(startMenuData);
+  if (type === "population") renderSubmenu(populationMenuData);
+  if (type === "rea") renderSubmenu(reaMenuData);
+}
+
+function openSubmenuSection(sectionIndex) {
+  currentView = "submenu_section";
+  currentSectionIndex = sectionIndex;
+  const data = submenuType === "start" ? startMenuData : submenuType === "population" ? populationMenuData : reaMenuData;
+  const section = data.sections[sectionIndex];
+  if (section) renderSection(section.title, section.content, 'goToSubmenuView');
+}
+
+function openModule(moduleIndex) {
+  currentView = "module";
+  currentModuleIndex = moduleIndex;
+  currentSectionIndex = -1;
+  renderModule(contentModulesData[moduleIndex]);
+}
+
+function openModuleSection(sectionIndex) {
+  currentView = "module_section";
+  currentSectionIndex = sectionIndex;
+  const section = contentModulesData[currentModuleIndex]?.sections[sectionIndex];
+  if (section) renderSection(section.title, section.content, 'goToModuleView');
+}
+
+function goToMainView() {
+  currentView = "main";
+  currentSlide = 0;
+  submenuType = null;
+  currentModuleIndex = -1;
+  currentSectionIndex = -1;
+  buildSlides(cfg());
+}
+
+function goToSubmenuView() {
+  currentView = "submenu";
+  if (submenuType) openSubmenu(submenuType);
+}
+
+function goToContentView() {
+  currentView = "main";
+  currentSlide = 1;
+  submenuType = null;
+  currentModuleIndex = -1;
+  currentSectionIndex = -1;
+  buildSlides(cfg());
+}
+
+function goToModuleView() {
+  currentView = "module";
+  if (currentModuleIndex >= 0) renderModule(contentModulesData[currentModuleIndex]);
+}
+
+// Cambia la hoja activa. No edites esta función si solo quieres cambiar textos.
+function goToSlide(i) {
+  currentView = "main";
+  currentSlide = i;
+  buildSlides(cfg());
+  closeSidebar();
+}
+
+function handleBack() {
+  if (currentView === "submenu") goToMainView();
+  else if (currentView === "submenu_section") goToSubmenuView();
+  else if (currentView === "module") goToContentView();
+  else if (currentView === "module_section") goToModuleView();
+  else goToSlide((currentSlide - 1 + slidesData.length) % slidesData.length);
+}
+
+function handleNext() {
+  if (currentView === "main") goToSlide((currentSlide + 1) % slidesData.length);
+}
+
+function toggleSidebar() {
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('sidebar-open', sidebarOpen);
+  document.getElementById('sidebar').classList.toggle('sidebar-closed', !sidebarOpen);
+  document.getElementById('overlay').classList.toggle('hidden', !sidebarOpen);
+}
+function closeSidebar() {
+  sidebarOpen = false;
+  document.getElementById('sidebar').classList.add('sidebar-closed');
+  document.getElementById('sidebar').classList.remove('sidebar-open');
+  document.getElementById('overlay').classList.add('hidden');
+}
+
+function closeResourceModal() { document.getElementById('resourceModal').classList.remove('active-modal'); }
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+}
+
+document.getElementById('menuBtn').addEventListener('click', toggleSidebar);
+document.getElementById('closeMenu').addEventListener('click', closeSidebar);
+document.getElementById('overlay').addEventListener('click', closeSidebar);
+document.getElementById('prevBtn').addEventListener('click', handleBack);
+document.getElementById('nextBtn').addEventListener('click', handleNext);
+document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') handleBack();
+  if (e.key === 'ArrowRight') handleNext();
+  if (e.key === 'Escape') closeSidebar();
+});
+
+
+// Avatar expositor: saludo inicial automático y voz solo mientras el cursor está encima.
+// ===================== 7. CONFIGURACIÓN DE VOZ Y AVATAR =====================
+// Último texto que leyó el avatar. El botón Repetir usa este texto.
+let lastSpokenText = "Bienvenidos a este ODC de una Wiki para el aprendizaje de redes.";
+let speechEnabled = true;
+let activeSpeakElement = null;
+let hoverSpeakTimer = null;
+let startupWelcomePlayed = false;
+let selectedSpanishVoice = null;
+
+function selectSpanishVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  selectedSpanishVoice =
+    voices.find(v => /^es[-_]CO/i.test(v.lang)) ||
+    voices.find(v => /^es[-_]/i.test(v.lang) && /Colombia|Colombian/i.test(v.name)) ||
+    voices.find(v => /^es[-_]MX/i.test(v.lang)) ||
+    voices.find(v => /^es[-_]ES/i.test(v.lang)) ||
+    voices.find(v => /^es[-_]/i.test(v.lang)) ||
+    voices[0] || null;
+  return selectedSpanishVoice;
+}
+
+function whenVoicesReady(callback) {
+  if (!('speechSynthesis' in window)) { callback(); return; }
+  const synth = window.speechSynthesis;
+  if (synth.getVoices().length) {
+    selectSpanishVoice();
+    callback();
+    return;
+  }
+  let done = false;
+  const run = () => {
+    if (done) return;
+    done = true;
+    selectSpanishVoice();
+    callback();
+  };
+  synth.onvoiceschanged = run;
+  setTimeout(run, 700);
+}
+
+function cleanTextForSpeech(text) {
+  return (text || '')
+    .replace(/\s+/g, ' ')
+    .replace(/[🚀📚👥⚡✉️🎯📊💡📈🌍]/g, '')
+    .trim();
+}
+
+function setAvatarSpeaking(isSpeaking, message) {
+  const avatar = document.getElementById('speakerAvatar');
+  const status = document.getElementById('avatarStatus');
+  const video = document.getElementById('agentVideo');
+  if (!avatar || !status) return;
+  avatar.classList.toggle('speaking', isSpeaking);
+  status.textContent = message || (isSpeaking ? 'Hablando mientras mantienes el cursor aquí...' : 'Pasa el cursor por un texto.');
+  if (video) {
+    if (isSpeaking) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+      try { video.currentTime = 0; } catch (e) {}
+    }
+  }
+}
+
+function stopSpeaking(message = 'Cursor fuera del elemento. Voz detenida.') {
+  clearTimeout(hoverSpeakTimer);
+  hoverSpeakTimer = null;
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  if (activeSpeakElement) activeSpeakElement.classList.remove('speak-hover-highlight');
+  activeSpeakElement = null;
+  setAvatarSpeaking(false, message);
+}
+
+// Lee en voz alta el texto del elemento sobre el que está el cursor.
+// Para cambiar velocidad, tono o volumen, edita utterance.rate, utterance.pitch y utterance.volume.
+function speakText(text, element) {
+  const cleaned = cleanTextForSpeech(text);
+  if (!cleaned || !speechEnabled) return;
+  lastSpokenText = cleaned;
+  if (!('speechSynthesis' in window)) {
+    setAvatarSpeaking(false, 'Tu navegador no permite voz automática.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  selectSpanishVoice();
+  const utterance = new SpeechSynthesisUtterance(cleaned);
+  utterance.lang = selectedSpanishVoice?.lang || 'es-CO';
+  if (selectedSpanishVoice) utterance.voice = selectedSpanishVoice;
+  utterance.rate = 0.95;
+  utterance.pitch = 1.04;
+  utterance.volume = 1;
+  utterance.onstart = () => {
+    if (activeSpeakElement === element) setAvatarSpeaking(true, 'Hablando mientras mantienes el cursor aquí...');
+  };
+  utterance.onend = () => {
+    if (activeSpeakElement === element) setAvatarSpeaking(false, 'Terminó este texto. Mantén el cursor o pasa a otro.');
+  };
+  utterance.onerror = () => {
+    if (activeSpeakElement === element) setAvatarSpeaking(false, 'No se pudo reproducir la voz.');
+  };
+  window.speechSynthesis.speak(utterance);
+}
+
+function getSpeakableElement(target) {
+  return target.closest('[data-speak], button, .slide-title, .slide-body, h1, h2, h3, p, .uc-badge, .module-card, .resource-btn, .menu-item');
+}
+
+function getElementSpeechText(element) {
+  if (!element) return '';
+  return element.getAttribute('data-speak') || element.innerText || element.textContent || '';
+}
+
+
+// Mensaje inicial automático: se reproduce una sola vez al abrir la presentación.
+function speakStartupWelcome() {
+  if (startupWelcomePlayed || !speechEnabled) return;
+
+  // EDITA AQUÍ EL SALUDO INICIAL DE LA PRIMERA HOJA
+  const welcomeText = 'Bienvenidos a este ODC de una Wiki para el aprendizaje de redes.';
+  lastSpokenText = welcomeText;
+
+  if (!('speechSynthesis' in window)) {
+    setAvatarSpeaking(false, 'Tu navegador no permite voz automática.');
+    return;
+  }
+
+  whenVoicesReady(() => {
+    if (startupWelcomePlayed || activeSpeakElement || !speechEnabled) return;
+
+    const synth = window.speechSynthesis;
+    synth.cancel();
+    selectSpanishVoice();
+
+    const utterance = new SpeechSynthesisUtterance(welcomeText);
+    utterance.lang = selectedSpanishVoice?.lang || 'es-CO';
+    if (selectedSpanishVoice) utterance.voice = selectedSpanishVoice;
+    utterance.rate = 0.95;
+    utterance.pitch = 1.04;
+    utterance.volume = 1;
+
+    utterance.onstart = () => {
+      startupWelcomePlayed = true;
+      setAvatarSpeaking(true, 'Saludo inicial de bienvenida...');
+    };
+    utterance.onend = () => {
+      if (!activeSpeakElement) setAvatarSpeaking(false, 'Pasa el cursor por un texto para escucharlo.');
+    };
+    utterance.onerror = () => {
+      startupWelcomePlayed = false;
+      setAvatarSpeaking(false, 'El navegador bloqueó la voz inicial. Usa Repetir o pasa el cursor por un texto.');
+    };
+
+    synth.speak(utterance);
+
+    setTimeout(() => {
+      if (synth.paused) synth.resume();
+    }, 250);
+  });
+}
+
+function scheduleStartupWelcome() {
+  const start = () => {
+    setTimeout(() => {
+      if (!activeSpeakElement) speakStartupWelcome();
+    }, 450);
+  };
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    start();
+  } else {
+    document.addEventListener('DOMContentLoaded', start, { once: true });
+  }
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (!startupWelcomePlayed && !activeSpeakElement) speakStartupWelcome();
+    }, 900);
+  }, { once: true });
+}
+
+function installAvatarSpeech() {
+  const repeatBtn = document.getElementById('avatarRepeatBtn');
+  const stopBtn = document.getElementById('avatarStopBtn');
+  const avatar = document.getElementById('speakerAvatar');
+
+  if (repeatBtn) repeatBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    speechEnabled = true;
+    if (activeSpeakElement) speakText(lastSpokenText, activeSpeakElement);
+  });
+
+  if (stopBtn) stopBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    speechEnabled = !speechEnabled;
+    stopSpeaking(speechEnabled ? 'Voz activada. Pasa el cursor por un texto.' : 'Voz desactivada.');
+    stopBtn.textContent = speechEnabled ? 'Silenciar' : 'Activar voz';
+  });
+
+  if (avatar) avatar.addEventListener('click', (e) => e.stopPropagation());
+
+  document.addEventListener('mouseover', (e) => {
+    const element = getSpeakableElement(e.target);
+    if (!element || element.closest('#speakerAvatar')) return;
+    if ('speechSynthesis' in window && !activeSpeakElement) window.speechSynthesis.cancel();
+
+    const text = cleanTextForSpeech(getElementSpeechText(element));
+    if (!text || text.length < 2) return;
+
+    if (activeSpeakElement && activeSpeakElement !== element) {
+      activeSpeakElement.classList.remove('speak-hover-highlight');
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    activeSpeakElement = element;
+    element.classList.add('speak-hover-highlight');
+    setAvatarSpeaking(false, 'Preparando lectura...');
+
+    clearTimeout(hoverSpeakTimer);
+    hoverSpeakTimer = setTimeout(() => {
+      if (activeSpeakElement === element && element.matches(':hover')) speakText(text, element);
+    }, 180);
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    const element = getSpeakableElement(e.target);
+    if (!element || element.closest('#speakerAvatar')) return;
+
+    const stillInside = e.relatedTarget && element.contains(e.relatedTarget);
+    if (stillInside) return;
+
+    if (activeSpeakElement === element) stopSpeaking();
+    else element.classList.remove('speak-hover-highlight');
+  });
+}
+
+async function initElementSdk() {
+  if (!window.elementSdk) {
+    buildSlides(defaultConfig);
+    return;
+  }
+  await window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => {
+      document.body.style.fontFamily = `${config.font_family || defaultConfig.font_family}, sans-serif`;
+      if (currentView === "main") buildSlides(config);
+    },
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+        { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+        { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+        { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } }
+      ],
+      borderables: [],
+      fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+      fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ["main_title", config.main_title || defaultConfig.main_title],
+      ["content_title", config.content_title || defaultConfig.content_title],
+      ["btn_start_text", config.btn_start_text || defaultConfig.btn_start_text],
+      ["btn_population_text", config.btn_population_text || defaultConfig.btn_population_text],
+      ["btn_rea_text", config.btn_rea_text || defaultConfig.btn_rea_text]
+    ])
+  });
+  buildSlides(window.elementSdk.config || defaultConfig);
+}
+
+initElementSdk();
+installAvatarSpeech();
+scheduleStartupWelcome();
+if ('speechSynthesis' in window) {
+  selectSpanishVoice();
+  window.speechSynthesis.onvoiceschanged = selectSpanishVoice;
+}
+lucide.createIcons();
+</script>
+</body>
+</html>
