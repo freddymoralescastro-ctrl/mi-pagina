@@ -375,173 +375,6 @@
     }
     @media (max-width: 760px) { .speaker-avatar { right: 12px; bottom: 78px; width: 215px; } .speaker-avatar-body { padding: 9px; gap:8px; } .avatar-video-wrap { width: 78px; height: 92px; flex-basis: 78px; } .avatar-character { transform: scale(.82); } .avatar-name { font-size: 12px; } .avatar-status { font-size: 10px; } }
 
-  
-    /* ===================== DISEÑO TIPO BOTSTART PARA SUBPANTALLAS =====================
-       Este bloque mejora las pantallas que se abren al hacer clic en Comencemos,
-       módulos o secciones. Evita que el Paso 1 se recorte y da un estilo más moderno. */
-    .botstart-panel-card {
-      width: min(1080px, 100%);
-      min-height: 64vh;
-      max-height: calc(100vh - 150px);
-      border-radius: 34px;
-      overflow: hidden;
-      border: 1px solid rgba(0,72,43,.18);
-      background:
-        radial-gradient(circle at 8% 8%, rgba(251,225,34,.52), transparent 26%),
-        radial-gradient(circle at 94% 18%, rgba(0,123,62,.22), transparent 28%),
-        linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,251,234,.88));
-      box-shadow: 0 30px 90px rgba(0,72,43,.22);
-      backdrop-filter: blur(16px);
-    }
-    .botstart-panel-scroll {
-      position: relative;
-      z-index: 10;
-      height: 100%;
-      max-height: calc(100vh - 150px);
-      overflow-y: auto;
-      padding: 34px;
-      padding-bottom: 130px;
-      scrollbar-width: thin;
-      scrollbar-color: #007B3E rgba(0,72,43,.08);
-    }
-    .botstart-hero-row {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 22px;
-      align-items: stretch;
-      margin-top: 10px;
-    }
-    .botstart-hero-copy {
-      text-align: left;
-      border-radius: 28px;
-      padding: 26px;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(0,72,43,.12);
-      box-shadow: 0 18px 45px rgba(0,72,43,.10);
-    }
-    .botstart-hero-visual {
-      border-radius: 28px;
-      padding: 22px;
-      background: linear-gradient(135deg,#00482B,#007B3E 55%,#DAA000);
-      color: white;
-      text-align: left;
-      box-shadow: 0 18px 45px rgba(0,72,43,.22);
-      overflow: hidden;
-      position: relative;
-    }
-    .botstart-hero-visual::after {
-      content: '';
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      right: -50px;
-      bottom: -50px;
-      border-radius: 999px;
-      background: rgba(251,225,34,.35);
-    }
-    .botstart-back-btn {
-      border: 0;
-      cursor: pointer;
-      border-radius: 999px;
-      padding: 12px 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #00482B;
-      color: #fff;
-      font-weight: 900;
-      box-shadow: 0 14px 28px rgba(0,72,43,.22);
-      margin-bottom: 18px;
-    }
-    .botstart-step-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      width: 100%;
-      margin-top: 24px;
-    }
-    .botstart-step-card {
-      border: 0;
-      cursor: pointer;
-      min-height: 230px;
-      border-radius: 30px;
-      padding: 22px;
-      text-align: left;
-      color: #00482B;
-      background: rgba(255,255,255,.90);
-      border: 1px solid rgba(0,72,43,.13);
-      box-shadow: 0 18px 42px rgba(0,72,43,.14);
-      transition: transform .22s ease, box-shadow .22s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .botstart-step-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 24px 54px rgba(0,72,43,.22);
-    }
-    .botstart-step-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(251,225,34,.28), transparent 55%);
-      pointer-events: none;
-    }
-    .botstart-step-number {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg,#FBE122,#DAA000);
-      color: #00482B;
-      font-weight: 900;
-      font-size: 22px;
-      margin-bottom: 16px;
-      box-shadow: 0 12px 22px rgba(218,160,0,.20);
-      position: relative;
-      z-index: 2;
-    }
-    .botstart-step-card h3,
-    .botstart-step-card p,
-    .botstart-step-card span {
-      position: relative;
-      z-index: 2;
-    }
-    .botstart-step-title { font-size: 18px; font-weight: 900; line-height: 1.22; margin-bottom: 10px; }
-    .botstart-step-summary { font-size: 13.5px; line-height: 1.55; opacity: .78; }
-    .botstart-open-pill {
-      margin-top: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 13px;
-      border-radius: 999px;
-      background: #00482B;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
-    }
-    .botstart-section-detail {
-      margin-top: 24px;
-      max-width: 900px;
-      width: 100%;
-      text-align: left;
-      border-radius: 30px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(0,72,43,.14);
-      box-shadow: 0 22px 56px rgba(0,72,43,.14);
-      padding: 30px;
-      color: #00482B;
-    }
-    .botstart-section-detail p { font-size: 18px; line-height: 1.75; opacity: .84; }
-    .botstart-mini-chips { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
-    .botstart-mini-chips span { padding:8px 12px; border-radius:999px; background:rgba(251,225,34,.42); color:#00482B; font-size:12px; font-weight:900; }
-    @media (max-width: 980px) {
-      .botstart-hero-row, .botstart-step-grid { grid-template-columns: 1fr; }
-      .botstart-panel-scroll { padding: 24px; padding-bottom: 150px; }
-      .botstart-step-card { min-height: auto; }
-    }
-
   </style>
 </head>
 <body class="h-full">
@@ -689,41 +522,29 @@ const defaultConfig = {
 // contentSlide: true = indica que la hoja muestra los módulos.
 const slidesData = [
   // Hoja 1: Bienvenidos
-  { icon: "sparkles", body: " USO DE LOS RECURSOS DIGITALES PARA FACILITAR EL APRENDIZAJE EN REDES DE COMUNICACIÓN EN ESTUDIANTES ", accent: "🎓", twoButtons: true },
+  { icon: "sparkles", body: "Una presentación interactiva inspirada en la paleta institucional de la Universidad de Cundinamarca.", accent: "🎓", twoButtons: true },
   // Hoja 2: Contenido
   { icon: "book", body: "Explora contenido temático organizado en 6 módulos.", accent: "📚", contentSlide: true },
 
+  // Hoja 3: Sobre Nosotros
+  { icon: "users", body: "Somos un equipo comprometido con la innovación, el aprendizaje y el desarrollo creativo.", accent: "👥" },
+
+  // Hoja 4: Servicios
+  { icon: "zap", body: "Ofrecemos soluciones digitales, diseño y desarrollo a medida.", accent: "⚡" },
+
+  // Hoja 5: Contacto
+  { icon: "mail", body: "¿Listo para colaborar? Escríbenos y hagamos algo increíble juntos.", accent: "✉️" }
 ];
 
 // ===================== 3. SUBMENÚ DEL BOTÓN "COMENCEMOS" =====================
 // Cambia title, subtitle y las secciones para modificar lo que aparece al presionar Comencemos.
 const startMenuData = {
   title: "Comencemos",
-  subtitle: "Tres pasos para comprender la wiki del ODC",
+  subtitle: "Tu camino hacia el aprendizaje",
   sections: [
-    {
-      title: "Paso 1: ¿Qué es una wiki educativa?",
-      content: `Una wiki educativa es un recurso digital organizado por páginas enlazadas entre sí. 
-      Permite consultar información de forma flexible, navegar por temas relacionados y construir conocimiento de manera progresiva.
-      En este ODC, la wiki se usa para facilitar el aprendizaje introductorio de redes de comunicación, porque organiza conceptos como dispositivos, 
-      topologías, protocolos, direccionamiento IP y seguridad básica en secciones claras, breves e interactivas. Su propósito no es solo presentar teoría, 
-      sino ofrecer una ruta de aprendizaje que ayude al estudiante principiante a repasar, relacionar conceptos y avanzar a su propio ritmo.`
-    },
-    {
-      title: "Paso 2: ¿Cómo crear una wiki para aprender redes?",
-      content: `Para crear una wiki educativa se debe iniciar con un objetivo claro de aprendizaje, definir la población objetivo y organizar los contenidos 
-      por módulos. Primero se seleccionan los temas principales, por ejemplo: fundamentos de redes, dispositivos de interconexión, topologías, protocolos, 
-      direccionamiento IP y seguridad básica. Luego se crean páginas breves para cada tema, se agregan ejemplos cotidianos, imágenes, glosarios, 
-      actividades de verificación y enlaces internos para conectar conceptos. Finalmente, se incluyen botones, retroalimentación y navegación sencilla para que el
-      estudiante pueda consultar la información sin perderse dentro del recurso.`
-    },
-    {
-      title: "Paso 3: Aplicación y conclusiones del ODC",
-      content: `El ODC basado en una wiki permite transformar contenidos técnicos en una experiencia de aprendizaje más clara, visual e interactiva. 
-      Su aplicación ayuda a reducir la dificultad inicial que tienen muchos estudiantes al acercarse a las redes de comunicación, ya que combina explicación gradual,
-      navegación modular, apoyos visuales y actividades de realimentación. Como conclusión, una wiki bien diseñada favorece la autonomía, el repaso selectivo y la 
-      comprensión progresiva; además, fortalece el vínculo entre tecnología educativa, pedagogía digital e infraestructura de redes.`
-    }
+    { title: "Paso 1: Introducción", content: "Aprende los fundamentos y principios básicos del programa." },
+    { title: "Paso 2: Herramientas", content: "Descubre las herramientas que utilizaremos en el proceso." },
+    { title: "Paso 3: Metodología", content: "Entiende nuestro enfoque estructurado y probado." }
   ]
 };
 
@@ -917,36 +738,20 @@ function updateSlideUI(config = cfg()) {
   });
 }
 
-function summarizeText(text, max = 145) {
-  const clean = String(text || '').replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-  return clean.length > max ? clean.slice(0, max).trim() + '…' : clean;
-}
-
-function renderPanel(title, subtitle, contentHtml, backAction, visualText = 'Wiki educativa interactiva') {
+function renderPanel(title, subtitle, contentHtml, backAction) {
   const container = document.getElementById('slidesContainer');
   container.innerHTML = `
-    <div class="botstart-panel-card">
+    <div class="uc-card w-full">
       <div class="uc-ribbon"></div>
-      <div class="botstart-panel-scroll">
+      <div class="relative z-10 flex flex-col items-center text-center gap-5 p-6 md:p-10 pt-8 md:pt-12 h-full overflow-y-auto">
         <!-- BOTÓN ATRÁS DE SUBMENÚS/MÓDULOS/SECCIONES -->
-        <button class="botstart-back-btn" onclick="${backAction}()" data-speak="Botón Atrás. Regresa a la pantalla anterior.">
+        <button class="back-btn px-5 py-3 rounded-2xl font-extrabold flex items-center gap-2" style="background:#00482B;color:white;" onclick="${backAction}()">
           ${icon('arrow-left',18)} Atrás
         </button>
-        <div class="botstart-hero-row">
-          <div class="botstart-hero-copy">
-            <div class="uc-badge" data-speak="Universidad de Cundinamarca">Universidad de Cundinamarca</div>
-            <h1 class="text-3xl md:text-5xl font-extrabold mt-4" style="color:#00482B;" data-speak="${escapeAttr(title)}">${title}</h1>
-            <p class="text-lg max-w-2xl mt-3" style="color:#007B3E;opacity:.88;" data-speak="${escapeAttr(subtitle)}">${subtitle}</p>
-            <div class="mt-5">${colorBlocks()}</div>
-          </div>
-          <div class="botstart-hero-visual" data-speak="${escapeAttr(visualText)}">
-            <div style="position:relative;z-index:2;">
-              <div style="font-size:42px;margin-bottom:12px;">🤖📚</div>
-              <div style="font-size:22px;font-weight:900;line-height:1.2;">Modelo interactivo tipo asistente</div>
-              <p style="font-size:14px;line-height:1.6;opacity:.84;margin-top:10px;">Haz clic en cada tarjeta para abrir la explicación completa. El avatar leerá los textos al pasar el cursor.</p>
-            </div>
-          </div>
-        </div>
+        <div class="uc-badge">Universidad de Cundinamarca</div>
+        <h1 class="text-3xl md:text-5xl font-extrabold" style="color:#00482B;">${title}</h1>
+        <p class="text-lg max-w-2xl" style="color:#007B3E;opacity:.88;">${subtitle}</p>
+        ${colorBlocks()}
         ${contentHtml}
       </div>
     </div>`;
@@ -954,48 +759,43 @@ function renderPanel(title, subtitle, contentHtml, backAction, visualText = 'Wik
 }
 
 // Renderiza los submenús de los botones de la primera hoja.
-// En Comencemos solo se muestran tarjetas resumidas para evitar que el Paso 1 quede recortado.
 function renderSubmenu(menuData) {
-  const isStartMenu = menuData === startMenuData;
-  const content = `<div class="botstart-step-grid">
+  const content = `<div class="mt-5 grid grid-cols-1 gap-4 w-full max-w-3xl">
     ${menuData.sections.map((section, idx) => `
-      <button class="botstart-step-card" onclick="openSubmenuSection(${idx})" data-speak="${escapeAttr(section.title + '. ' + summarizeText(section.content, 120))}">
-        <div class="botstart-step-number">${idx + 1}</div>
-        <h3 class="botstart-step-title">${section.title}</h3>
-        <p class="botstart-step-summary">${summarizeText(section.content, isStartMenu ? 132 : 155)}</p>
-        <span class="botstart-open-pill">Abrir información ${icon('arrow-right',14)}</span>
+      <button class="module-card p-6 rounded-3xl text-left" style="background:white;border:1px solid rgba(0,72,43,.16);color:#00482B;" onclick="openSubmenuSection(${idx})">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-extrabold shrink-0" style="background:#FBE122;color:#00482B;">${idx + 1}</div>
+          <div><h3 class="font-extrabold text-lg mb-2">${section.title}</h3><p class="text-sm opacity-75 leading-relaxed">${section.content}</p></div>
+        </div>
       </button>`).join('')}
   </div>`;
-  renderPanel(menuData.title, menuData.subtitle, content, 'goToMainView', isStartMenu ? 'Comencemos. Tres pasos para aprender qué es una wiki, cómo crearla y cómo aplicarla al ODC de redes.' : menuData.subtitle);
+  renderPanel(menuData.title, menuData.subtitle, content, 'goToMainView');
 }
 
 // Renderiza un módulo y sus secciones en pantalla.
 function renderModule(moduleData) {
-  const content = `<div class="botstart-step-grid">
+  const content = `<div class="mt-5 grid grid-cols-1 gap-4 w-full max-w-3xl">
     ${moduleData.sections.map((section, idx) => `
-      <button class="botstart-step-card" onclick="openModuleSection(${idx})" data-speak="${escapeAttr(section.title + '. ' + summarizeText(section.content, 120))}">
-        <div class="botstart-step-number">${idx + 1}</div>
-        <h3 class="botstart-step-title">${section.title}</h3>
-        <p class="botstart-step-summary">${summarizeText(section.content, 150)}</p>
-        <span class="botstart-open-pill">Ver detalle ${icon('arrow-right',14)}</span>
+      <button class="module-card p-6 rounded-3xl text-left" style="background:${idx === 1 ? '#FBE122' : 'white'};border:1px solid rgba(0,72,43,.16);color:#00482B;" onclick="openModuleSection(${idx})">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center font-extrabold shrink-0" style="background:#007B3E;color:white;">${idx + 1}</div>
+          <div><h3 class="font-extrabold text-lg mb-2">${section.title}</h3><p class="text-sm opacity-75 leading-relaxed">${section.content}</p></div>
+        </div>
       </button>`).join('')}
   </div>`;
-  renderPanel(moduleData.title, moduleData.subtitle, content, 'goToContentView', moduleData.title + '. ' + moduleData.subtitle);
+  renderPanel(moduleData.title, moduleData.subtitle, content, 'goToContentView');
 }
 
 function renderSection(sectionTitle, sectionContent, backAction) {
   const content = `
-    <div class="botstart-section-detail" data-speak="${escapeAttr(sectionTitle + '. ' + sectionContent)}">
+    <div class="mt-6 p-7 md:p-9 rounded-3xl text-left max-w-3xl" style="background:white;border:1px solid rgba(0,72,43,.16);box-shadow:0 18px 40px rgba(0,72,43,.12);color:#00482B;">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:#FBE122;color:#00482B;">${icon('check-circle',24)}</div>
         <h2 class="text-2xl font-extrabold">${sectionTitle}</h2>
       </div>
-      <p>${sectionContent}</p>
-      <div class="botstart-mini-chips">
-        <span>Wiki</span><span>Aprendizaje</span><span>Redes</span><span>ODC</span>
-      </div>
+      <p class="text-lg leading-relaxed opacity-80">${sectionContent}</p>
     </div>`;
-  renderPanel(sectionTitle, "Información desplegada del paso seleccionado", content, backAction, 'Detalle del tema seleccionado dentro de la wiki interactiva.');
+  renderPanel(sectionTitle, "Detalle del tema seleccionado", content, backAction);
 }
 
 function openSubmenu(type) {
