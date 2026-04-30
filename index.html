@@ -1,6 +1,20 @@
 <!doctype html>
 <html lang="es" class="h-full">
 <head>
+<!--
+================================================================================
+ARCHIVO FINAL COMENTADO
+--------------------------------------------------------------------------------
+Este HTML contiene toda la presentación interactiva.
+Está organizado por zonas para editar con facilidad:
+1. <head>: carga de iconos, fuente y estilos.
+2. <style>: diseño visual de hojas, botones, tarjetas y avatar.
+3. <body>: estructura base de la presentación.
+4. <script>: datos editables, acciones de botones, navegación, avatar y voz.
+Las funciones del avatar se conservan aunque el avatar esté minimizado.
+================================================================================
+-->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Presentación Interactiva - UdeC con botones Atrás</title>
@@ -140,7 +154,6 @@
 
     /* ===================== ZONA EDITABLE DE COLORES =====================
        Cambia estos códigos HEX para modificar la paleta de toda la presentación.
-       Paleta actual Universidad de Cundinamarca:
        Amarillo: #FBE122 | Dorado: #DAA000 | Verde: #007B3E | Verde oscuro: #00482B
     */
     :root {
@@ -375,6 +388,94 @@
     }
     @media (max-width: 760px) { .speaker-avatar { right: 12px; bottom: 78px; width: 215px; } .speaker-avatar-body { padding: 9px; gap:8px; } .avatar-video-wrap { width: 78px; height: 92px; flex-basis: 78px; } .avatar-character { transform: scale(.82); } .avatar-name { font-size: 12px; } .avatar-status { font-size: 10px; } }
 
+
+    /* AJUSTE FINAL: avatar más grande y minimizable, conservando la voz. Cada regla controla tamaño, estado normal y estado minimizado. */
+    .speaker-avatar {
+      width: 335px !important;
+      right: 24px !important;
+      bottom: 96px !important;
+      transition: width .25s ease, height .25s ease, border-radius .25s ease, transform .25s ease, box-shadow .25s ease;
+    }
+    .speaker-avatar .avatar-video-wrap {
+      flex-basis: 125px !important;
+      width: 125px !important;
+      height: 145px !important;
+    }
+    .speaker-avatar .avatar-character { transform: scale(1.24); }
+    .speaker-avatar .avatar-name { font-size: 20px !important; }
+    .speaker-avatar .avatar-status { font-size: 13px !important; }
+    .avatar-toggle-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 80;
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 999px;
+      background: #00482B;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 18px rgba(0,72,43,.25);
+    }
+    .avatar-toggle-btn:hover { transform: scale(1.06); }
+    .speaker-avatar.minimized {
+      width: 96px !important;
+      height: 96px !important;
+      border-radius: 999px !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      background: radial-gradient(circle at 50% 25%, rgba(251,225,34,.90), rgba(0,123,62,.95));
+      display: grid;
+      place-items: center;
+    }
+    .speaker-avatar.minimized .speaker-avatar-header,
+    .speaker-avatar.minimized .avatar-info,
+    .speaker-avatar.minimized .avatar-controls {
+      display: none !important;
+    }
+    .speaker-avatar.minimized .speaker-avatar-body {
+      padding: 0 !important;
+      display: grid !important;
+      place-items: center !important;
+    }
+    .speaker-avatar.minimized .avatar-video-wrap {
+      width: 78px !important;
+      height: 82px !important;
+      flex-basis: 78px !important;
+      transform: scale(.72);
+      margin: 0;
+    }
+    .speaker-avatar.minimized .avatar-character { transform: scale(.92); }
+    .speaker-avatar.minimized .avatar-toggle-btn {
+      top: -7px;
+      right: -7px;
+      width: 30px;
+      height: 30px;
+      background: #FBE122;
+      color: #00482B;
+      border: 2px solid #00482B;
+    }
+    .voice-help-message {
+      margin-top: 7px;
+      padding: 7px 9px;
+      border-radius: 12px;
+      background: rgba(251,225,34,.38);
+      color: #00482B;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+    @media (max-width: 760px) {
+      .speaker-avatar { width: 260px !important; right: 10px !important; bottom: 88px !important; }
+      .speaker-avatar .avatar-video-wrap { width: 96px !important; height: 112px !important; flex-basis: 96px !important; }
+      .speaker-avatar .avatar-character { transform: scale(1); }
+    }
+
   </style>
 </head>
 <body class="h-full">
@@ -396,15 +497,16 @@
 
     <div id="overlay" class="hidden absolute inset-0 z-20 bg-black/40" style="cursor:pointer;"></div>
 
+    <!-- Contenedor principal de las hojas de la presentación. -->
     <main class="flex-1 flex flex-col h-full relative z-10">
       <div class="uc-top-strip shrink-0"></div>
+      <!-- Barra superior con menú, contador y pantalla completa. -->
       <header class="flex items-center justify-between px-5 py-3 shrink-0">
         <button id="menuBtn" class="nav-btn text-white p-2 rounded-xl" style="background:#00482B;">
           <i data-lucide="menu" style="width:20px;height:20px;"></i>
         </button>
         <div class="flex items-center gap-3">
           <span id="slideCounter" class="text-sm font-extrabold tracking-wider" style="color:#00482B;"></span>
-          <span class="hidden md:inline-block px-3 py-1 rounded-full text-xs font-bold" style="background:rgba(251,225,34,.45);color:#00482B;">Paleta UdeC</span>
         </div>
         <button id="fullscreenBtn" class="nav-btn text-white p-2 rounded-xl" style="background:#007B3E;">
           <i data-lucide="maximize-2" style="width:18px;height:18px;"></i>
@@ -415,6 +517,7 @@
         <div id="progressBar" class="progress-bar h-full rounded-r" style="background:linear-gradient(90deg,#FBE122,#DAA000,#007B3E,#00482B);width:20%;"></div>
       </div>
 
+      <!-- Aquí JavaScript dibuja dinámicamente cada hoja, módulo o sección. -->
       <div id="slidesContainer" class="flex-1 flex items-center justify-center px-5 py-5 overflow-auto"></div>
 
       <footer class="flex items-center justify-center gap-4 py-4 shrink-0">
@@ -437,6 +540,7 @@
         La animación de la boca se controla con CSS y JavaScript más abajo.
       -->
     <div id="speakerAvatar" class="speaker-avatar" title="Pasa el cursor por un texto para escuchar">
+      <button id="avatarToggleBtn" class="avatar-toggle-btn" type="button" title="Minimizar avatar">−</button>
       <div class="speaker-avatar-header">Avatar expositor</div>
       <div class="speaker-avatar-body">
         <div class="avatar-video-wrap" aria-hidden="true">
@@ -455,6 +559,7 @@
           <!-- Cambia aquí el nombre visible del avatar -->
           <div class="avatar-name">Profe UdeC</div>
           <div id="avatarStatus" class="avatar-status">Cursor fuera del elemento. Voz detenida.</div>
+          <div id="voiceHelpMessage" class="voice-help-message" style="display:none;">Da clic en Repetir para poder oír.</div>
         </div>
       </div>
       <div class="avatar-controls">
@@ -486,6 +591,17 @@
    5. Módulos y secciones: edita contentModulesData.
    6. Saludo inicial de la voz: busca la variable welcomeText en speakStartupWelcome().
    7. Voz del avatar: edita rate, pitch y volume en speakText() y speakStartupWelcome().
+
+   ORDEN DEL CÓDIGO:
+   - ACCIÓN PRINCIPAL: hojas de la presentación.
+   - ACCIÓN 1: botón Comencemos y sus pasos.
+   - ACCIÓN 2: botón Población Objeto y sus secciones.
+   - ACCIÓN 3: botón REA y sus secciones.
+   - ACCIÓN 4: hoja Contenido y módulos.
+   - Motores visuales y funciones de navegación.
+
+   Esta versión mantiene la parte visual anterior; solo se ordenó y comentó
+   el código para que sea más fácil editar cada acción.
    ===================================================================== */
 
 // ===================== 1. CONFIGURACIÓN GENERAL EDITABLE =====================
@@ -514,12 +630,21 @@ const defaultConfig = {
   font_size: 16
 };
 
-// ===================== 2. HOJAS PRINCIPALES EDITABLES =====================
-// Cada línea representa una hoja de la presentación.
-// body = texto de la hoja.
-// accent = emoji o símbolo grande de la hoja.
-// twoButtons: true = indica que la hoja tiene los botones Comencemos, Población y REA.
-// contentSlide: true = indica que la hoja muestra los módulos.
+// =====================================================================
+// ACCIÓN PRINCIPAL: HOJAS DE LA PRESENTACIÓN
+// ---------------------------------------------------------------------
+// Aquí está el contenido que se ve al avanzar con los botones Atrás/Siguiente
+// o al elegir una hoja desde el menú lateral.
+//
+// ORDEN DE EDICIÓN:
+// 1. Hoja Bienvenidos: muestra los botones Comencemos, Población Objeto y REA.
+// 2. Hoja Contenido: muestra los módulos interactivos.
+// 3. Hojas informativas adicionales.
+//
+// Para cambiar el texto visible de una hoja, edita la propiedad body.
+// Para cambiar el icono grande, edita la propiedad accent.
+// No cambies twoButtons ni contentSlide, salvo que sepas que quieres modificar la estructura.
+// =====================================================================
 const slidesData = [
   // Hoja 1: Bienvenidos
   { icon: "sparkles", body: "Una presentación interactiva inspirada en la paleta institucional de la Universidad de Cundinamarca.", accent: "🎓", twoButtons: true },
@@ -536,8 +661,15 @@ const slidesData = [
   { icon: "mail", body: "¿Listo para colaborar? Escríbenos y hagamos algo increíble juntos.", accent: "✉️" }
 ];
 
-// ===================== 3. SUBMENÚ DEL BOTÓN "COMENCEMOS" =====================
-// Cambia title, subtitle y las secciones para modificar lo que aparece al presionar Comencemos.
+// =====================================================================
+// ACCIÓN 1: BOTÓN "COMENCEMOS"
+// ---------------------------------------------------------------------
+// Todo lo que se despliega al hacer clic en el botón Comencemos está aquí.
+// Primero aparece el título y subtítulo del submenú.
+// Después aparecen las tarjetas o pasos en sections.
+// Cada objeto dentro de sections se convierte en una tarjeta clicable.
+// Al hacer clic en cada tarjeta, se abre el detalle del campo content.
+// =====================================================================
 const startMenuData = {
   title: "Comencemos",
   subtitle: "Tu camino hacia el aprendizaje",
@@ -548,8 +680,14 @@ const startMenuData = {
   ]
 };
 
-// ===================== 4. SUBMENÚ DEL BOTÓN "POBLACIÓN OBJETIVO" =====================
-// Aquí puedes cambiar el público al que va dirigida la presentación.
+// =====================================================================
+// ACCIÓN 2: BOTÓN "POBLACIÓN OBJETO"
+// ---------------------------------------------------------------------
+// Todo lo que se abre desde el botón Población Objeto está debajo.
+// title: título de la pantalla.
+// subtitle: subtítulo de la pantalla.
+// sections: tarjetas que se muestran y que luego despliegan su información.
+// =====================================================================
 const populationMenuData = {
   title: "Población Objetivo",
   subtitle: "A quién va dirigido",
@@ -560,8 +698,12 @@ const populationMenuData = {
   ]
 };
 
-// ===================== 5. SUBMENÚ DEL BOTÓN "REA" =====================
-// Aquí puedes editar la información de Recursos Educativos Abiertos.
+// =====================================================================
+// ACCIÓN 3: BOTÓN "REA"
+// ---------------------------------------------------------------------
+// Todo lo que se abre desde el botón REA está organizado en este bloque.
+// Cada sección se muestra como una tarjeta; al hacer clic se despliega el content.
+// =====================================================================
 const reaMenuData = {
   title: "REA - Recursos Educativos Abiertos",
   subtitle: "Educación accesible para todos",
@@ -572,10 +714,19 @@ const reaMenuData = {
   ]
 };
 
-// ===================== 6. MÓDULOS DE LA HOJA "CONTENIDO" =====================
+// =====================================================================
+// ACCIÓN 4: HOJA "CONTENIDO" Y APERTURA DE MÓDULOS
+// ---------------------------------------------------------------------
+// Todo lo que aparece al entrar a la hoja Contenido está aquí.
+// Cada bloque representa un módulo.
+// Cada módulo tiene:
+//   title: nombre visible del módulo.
+//   subtitle: descripción corta.
+//   sections: opciones internas que se abren al hacer clic.
+//
 // Para agregar un módulo, copia un bloque completo { title, subtitle, sections }.
 // Para eliminar un módulo, borra su bloque completo.
-// Cada módulo puede tener varias secciones dentro de sections.
+// =====================================================================
 const contentModulesData = [
   { title: "Módulo 1: Fundamentos", subtitle: "Bases sólidas para el éxito", sections: [
     { title: "Conceptos Básicos", content: "Aprende los principios fundamentales que respaldan todo el programa." },
@@ -626,6 +777,13 @@ function slideShell(inner, extra = "") {
   return `<div class="uc-card ${extra}"><div class="uc-ribbon"></div><div class="relative z-10 h-full flex flex-col items-center justify-center text-center gap-6 p-7 md:p-12">${inner}</div></div>`;
 }
 
+// =====================================================================
+// MOTOR VISUAL DE LAS HOJAS
+// ---------------------------------------------------------------------
+// Esta función construye visualmente las hojas anteriores.
+// Recomendación: no la edites si solo quieres cambiar textos.
+// El diseño visual se conserva igual que la versión anterior.
+// =====================================================================
 function buildSlides(config = cfg()) {
   const container = document.getElementById('slidesContainer');
   const titles = [
@@ -644,7 +802,6 @@ function buildSlides(config = cfg()) {
           <div class="brand-mark">UC</div>
           <div class="text-left">
             <div class="uc-badge">Universidad de Cundinamarca</div>
-            <div class="text-xs mt-2 font-bold" style="color:#007B3E;">Diseño institucional · Paleta principal</div>
           </div>
         </div>
         <div class="text-6xl md:text-7xl">${s.accent}</div>
@@ -759,6 +916,12 @@ function renderPanel(title, subtitle, contentHtml, backAction) {
 }
 
 // Renderiza los submenús de los botones de la primera hoja.
+// =====================================================================
+// MOTOR DE APERTURA DE SUBMENÚS
+// ---------------------------------------------------------------------
+// Esta función toma la información de startMenuData, populationMenuData o reaMenuData
+// y la muestra en pantalla. No cambia el diseño general anterior.
+// =====================================================================
 function renderSubmenu(menuData) {
   const content = `<div class="mt-5 grid grid-cols-1 gap-4 w-full max-w-3xl">
     ${menuData.sections.map((section, idx) => `
@@ -773,6 +936,12 @@ function renderSubmenu(menuData) {
 }
 
 // Renderiza un módulo y sus secciones en pantalla.
+// =====================================================================
+// MOTOR DE APERTURA DE MÓDULOS
+// ---------------------------------------------------------------------
+// Esta función toma cada módulo definido en contentModulesData y muestra
+// sus secciones internas.
+// =====================================================================
 function renderModule(moduleData) {
   const content = `<div class="mt-5 grid grid-cols-1 gap-4 w-full max-w-3xl">
     ${moduleData.sections.map((section, idx) => `
@@ -798,6 +967,12 @@ function renderSection(sectionTitle, sectionContent, backAction) {
   renderPanel(sectionTitle, "Detalle del tema seleccionado", content, backAction);
 }
 
+// =====================================================================
+// ACCIONES DE CLIC
+// ---------------------------------------------------------------------
+// Estas funciones conectan cada botón con el bloque de contenido correspondiente.
+// No cambies estos nombres si quieres conservar la interactividad.
+// =====================================================================
 function openSubmenu(type) {
   currentView = "submenu";
   submenuType = type;
@@ -920,6 +1095,8 @@ let activeSpeakElement = null;
 let hoverSpeakTimer = null;
 let startupWelcomePlayed = false;
 let selectedSpanishVoice = null;
+// Controla si el avatar está minimizado o visible en tamaño grande.
+let avatarMinimized = false;
 
 function selectSpanishVoice() {
   if (!('speechSynthesis' in window)) return null;
@@ -960,6 +1137,25 @@ function cleanTextForSpeech(text) {
     .trim();
 }
 
+
+// Muestra u oculta el aviso que recomienda usar Repetir cuando el navegador bloquea la voz.
+function showVoiceHelp(show) {
+  const help = document.getElementById('voiceHelpMessage');
+  if (help) help.style.display = show ? 'block' : 'none';
+}
+
+// Cambia el avatar entre vista grande y vista minimizada sin apagar la voz.
+function toggleAvatarMinimized() {
+  const avatar = document.getElementById('speakerAvatar');
+  const toggleBtn = document.getElementById('avatarToggleBtn');
+  if (!avatar || !toggleBtn) return;
+  avatarMinimized = !avatarMinimized;
+  avatar.classList.toggle('minimized', avatarMinimized);
+  toggleBtn.textContent = avatarMinimized ? '+' : '−';
+  toggleBtn.title = avatarMinimized ? 'Restaurar avatar' : 'Minimizar avatar';
+  toggleBtn.setAttribute('aria-label', toggleBtn.title);
+}
+
 function setAvatarSpeaking(isSpeaking, message) {
   const avatar = document.getElementById('speakerAvatar');
   const status = document.getElementById('avatarStatus');
@@ -967,6 +1163,7 @@ function setAvatarSpeaking(isSpeaking, message) {
   if (!avatar || !status) return;
   avatar.classList.toggle('speaking', isSpeaking);
   status.textContent = message || (isSpeaking ? 'Hablando mientras mantienes el cursor aquí...' : 'Pasa el cursor por un texto.');
+  if (isSpeaking) showVoiceHelp(false);
   if (video) {
     if (isSpeaking) {
       video.play().catch(() => {});
@@ -993,7 +1190,7 @@ function speakText(text, element) {
   if (!cleaned || !speechEnabled) return;
   lastSpokenText = cleaned;
   if (!('speechSynthesis' in window)) {
-    setAvatarSpeaking(false, 'Tu navegador no permite voz automática.');
+    setAvatarSpeaking(false, 'Tu navegador no permite voz automática. Da clic en Repetir para poder oír.');
     return;
   }
   window.speechSynthesis.cancel();
@@ -1011,7 +1208,7 @@ function speakText(text, element) {
     if (activeSpeakElement === element) setAvatarSpeaking(false, 'Terminó este texto. Mantén el cursor o pasa a otro.');
   };
   utterance.onerror = () => {
-    if (activeSpeakElement === element) setAvatarSpeaking(false, 'No se pudo reproducir la voz.');
+    if (activeSpeakElement === element) setAvatarSpeaking(false, 'No se pudo reproducir la voz. Da clic en Repetir para poder oír.');
   };
   window.speechSynthesis.speak(utterance);
 }
@@ -1035,7 +1232,7 @@ function speakStartupWelcome() {
   lastSpokenText = welcomeText;
 
   if (!('speechSynthesis' in window)) {
-    setAvatarSpeaking(false, 'Tu navegador no permite voz automática.');
+    setAvatarSpeaking(false, 'Tu navegador no permite voz automática. Da clic en Repetir para poder oír.');
     return;
   }
 
@@ -1062,7 +1259,7 @@ function speakStartupWelcome() {
     };
     utterance.onerror = () => {
       startupWelcomePlayed = false;
-      setAvatarSpeaking(false, 'El navegador bloqueó la voz inicial. Usa Repetir o pasa el cursor por un texto.');
+      setAvatarSpeaking(false, 'El navegador bloqueó la voz inicial. Da clic en Repetir para poder oír.');
     };
 
     synth.speak(utterance);
@@ -1093,16 +1290,27 @@ function scheduleStartupWelcome() {
 }
 
 function installAvatarSpeech() {
+  // Obtiene los botones y el contenedor del avatar.
   const repeatBtn = document.getElementById('avatarRepeatBtn');
   const stopBtn = document.getElementById('avatarStopBtn');
+  const toggleBtn = document.getElementById('avatarToggleBtn');
   const avatar = document.getElementById('speakerAvatar');
 
+  // Botón Repetir: intenta reproducir el último texto leído, incluso si el cursor ya no está sobre un elemento.
   if (repeatBtn) repeatBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     speechEnabled = true;
-    if (activeSpeakElement) speakText(lastSpokenText, activeSpeakElement);
+    showVoiceHelp(false);
+    speakText(lastSpokenText, activeSpeakElement || repeatBtn);
   });
 
+  // Botón Minimizar/Restaurar: cambia el tamaño del avatar conservando el habla.
+  if (toggleBtn) toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleAvatarMinimized();
+  });
+
+  // Botón Silenciar/Activar voz: permite apagar o encender la lectura.
   if (stopBtn) stopBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     speechEnabled = !speechEnabled;
@@ -1112,6 +1320,7 @@ function installAvatarSpeech() {
 
   if (avatar) avatar.addEventListener('click', (e) => e.stopPropagation());
 
+  // Detecta cuando el cursor entra en un texto, botón o tarjeta para iniciar lectura.
   document.addEventListener('mouseover', (e) => {
     const element = getSpeakableElement(e.target);
     if (!element || element.closest('#speakerAvatar')) return;
@@ -1135,6 +1344,7 @@ function installAvatarSpeech() {
     }, 180);
   });
 
+  // Detecta cuando el cursor sale del elemento para detener la voz inmediatamente.
   document.addEventListener('mouseout', (e) => {
     const element = getSpeakableElement(e.target);
     if (!element || element.closest('#speakerAvatar')) return;
